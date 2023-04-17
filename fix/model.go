@@ -19,7 +19,7 @@ type FixParams struct {
 	Dir string // 检测类型中需要指定文件夹
 
 	// 非local必填
-	proxyUrl    string // 可能需要的代理
+	ProxyUrl    string // 可能需要的代理
 	GitlabUrl   string `json:"gitlab_url"` //   Gitlab地址
 	CommitHash  string `json:"commitHash"` //   提交的hash
 	TargetOwner string // 目标 仓库拥有者

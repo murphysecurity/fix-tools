@@ -2,8 +2,8 @@ package fix
 
 import (
 	"fmt"
-	"git.murphy-int.com/wangxiaodong/fix_tool_go/fix/xml/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
+	"github.com/murphysecurity/fix-tools/fix/xml/parser"
 	"io"
 	"net/http"
 	"strings"
@@ -21,6 +21,7 @@ func (l *SimpleXMLListener) ExitElement(ctx *parser.ElementContext) {
 		l.line = ctx.Name(0).GetSymbol().GetLine()
 	}
 }
+
 func FindPropertiesLine(pomPath, targetElement, value string) int {
 
 	input, _ := antlr.NewFileStream(pomPath)
