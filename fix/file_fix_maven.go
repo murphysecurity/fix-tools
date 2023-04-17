@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"crypto/md5"
 
-	"fmt"
 	"github.com/antchfx/xmlquery"
 	"io"
 	"io/fs"
@@ -111,7 +110,6 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 				//读写方式打开文件
 				writeFile, err = os.OpenFile(model.PomPath, os.O_RDWR, 0666)
 				if err != nil {
-					fmt.Println("open file filed.", err)
 					return
 				}
 				//beforeMD5 := md5.New()
@@ -179,9 +177,10 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 	for _, pomPath := range pomPathList {
 		joinPath := filepath.Join(params.Dir, pomPath)
 		f, err := os.Open(joinPath)
-		println(err)
+		if err != nil {
+			return
+		}
 		doc, err := xmlquery.Parse(f)
-		println(doc)
 		properties := xmlquery.Find(doc, "//properties")
 		node0 := properties[0]
 		propertiesChilds := xmlquery.Find(node0, "child::*")
@@ -217,7 +216,6 @@ func (p *mavenParams) getFixModelList(params FixParams, pomPathList []string) {
 		}
 	}
 
-	println("xxxxxxxxx")
 }
 
 func (p *mavenParams) getExtensionFix(params FixParams, pomPathList []string) {

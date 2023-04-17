@@ -21,7 +21,6 @@ func (t FixParams) NpmFix() (preview []Preview, err error) {
 		packagejsonPathList = make([]string, 0)
 	)
 
-
 	fileSystem := os.DirFS(t.Dir)
 
 	err = fs.WalkDir(fileSystem, ".", func(path string, d fs.DirEntry, err error) error {
@@ -115,7 +114,6 @@ func (t FixParams) NpmFix() (preview []Preview, err error) {
 				//读写方式打开文件
 				writeFile, err = os.OpenFile(filePath, os.O_RDWR, 0666)
 				if err != nil {
-					fmt.Println("open file filed.", err)
 					return
 				}
 				beforeMD5 := md5.New()

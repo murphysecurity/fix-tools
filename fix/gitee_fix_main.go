@@ -64,7 +64,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	}
 
 	// commit代码,要执行的参数 commit msg
-	_, err = RunGitCommand(ctx, repoPath, "git", "commit", "-am", "update "+t.CompName+" "+t.CompVersion+" to "+t.MinFixVersion)
+	_, err = RunGitCommand(ctx, repoPath, "git", "commit", "-am", "fix vuln")
 	if err != nil {
 		return
 	}

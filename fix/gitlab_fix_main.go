@@ -55,7 +55,7 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 	}
 
 	// commit代码,要执行的参数 commit msg
-	_, err = RunGitCommand(ctx, repoPath, "git", "commit", "-am", "update "+t.CompName+" "+t.CompVersion+" to "+t.MinFixVersion)
+	_, err = RunGitCommand(ctx, repoPath, "git", "commit", "-am", "fix vuln")
 	if err != nil {
 		return
 	}
@@ -70,8 +70,6 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 		SourceBranch: gitlab.String(branch),
 		TargetBranch: gitlab.String(defBranch),
 	}
-	rule, response, err := git.MergeRequests.CreateMergeRequest(t.TargetOwner+"/"+t.Repo, &g)
-	println(rule)
-	println(response)
+	_, _, err = git.MergeRequests.CreateMergeRequest(t.TargetOwner+"/"+t.Repo, &g)
 	return
 }
