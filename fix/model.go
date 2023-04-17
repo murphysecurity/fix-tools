@@ -11,10 +11,8 @@ type FixParams struct {
 	ShowOnly       bool          `json:"show_only"` // 仅展示pr预览 不进行真的pr提交
 	TimeOut        time.Duration //超时时间 单位秒 默认60秒
 	RepoType       string        // 仓库类型 github gitee gitlab local
-	CompName       string        `json:"comp_name"`       // 组件名称
-	CompVersion    string        `json:"comp_version"`    // 组件版本
-	MinFixVersion  string        `json:"min_fix_version"` // 最小修复版本
-	PackageManager string        `json:"package_manager"` // 包管理器
+	CompList       []CompList
+	PackageManager string `json:"package_manager"` // 包管理器
 	// local必填
 	Dir string // 检测类型中需要指定文件夹
 
@@ -39,6 +37,12 @@ type FixParams struct {
 	// 内部使用不暴露
 	branch    string
 	defBranch string
+}
+
+type CompList struct {
+	CompName      string `json:"comp_name"`       // 组件名称
+	CompVersion   string `json:"comp_version"`    // 组件版本
+	MinFixVersion string `json:"min_fix_version"` // 最小修复版本
 }
 
 func (t *FixParams) check() error {
