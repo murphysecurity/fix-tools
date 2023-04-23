@@ -34,15 +34,15 @@ func (t *FixParams) GithubFix() (preview []Preview, err error) {
 	gitRemote := fmt.Sprintf("https://github.com/%s/%s.git", t.UserName, t.Repo)
 
 	// 获取github连接
-	client, err = GetClient(ctx, t.Token, t.proxyUrl)
+	client, err = GetClient(ctx, t.Token, t.ProxyUrl)
 	if err != nil {
 		err = errors.New("获取github连接失败: " + err.Error())
 		return
 	}
 	// fork2次 第一次fork的默认分支会出问题
-	_, _, _, _, _ = CreateFork(t.Token, t.TargetOwner, t.Repo, t.proxyUrl)
+	_, _, _, _, _ = CreateFork(t.Token, t.TargetOwner, t.Repo, t.ProxyUrl)
 	time.Sleep(time.Second)
-	defaultBranch, targetDefaultBranch, _, _, err = CreateFork(t.Token, t.TargetOwner, t.Repo, t.proxyUrl)
+	defaultBranch, targetDefaultBranch, _, _, err = CreateFork(t.Token, t.TargetOwner, t.Repo, t.ProxyUrl)
 	if err != nil && (defaultBranch == "" || targetDefaultBranch == "") {
 		err = errors.New("fork到本地失败")
 		return
@@ -59,7 +59,7 @@ func (t *FixParams) GithubFix() (preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	_, err = GitConfig(ctx, path, repoPath, branch, gitRemote, t.PackageManager, t.proxyUrl, t.UserName, t.Password)
+	_, err = GitConfig(ctx, path, repoPath, branch, gitRemote, t.PackageManager, t.ProxyUrl, t.UserName, t.Password)
 	if err != nil {
 		return
 	}

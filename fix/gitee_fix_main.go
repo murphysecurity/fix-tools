@@ -37,7 +37,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	t.defBranch, err = GitConfig(ctx, "./", repoPath, t.branch, forksResponse.HtmlUrl, t.CommitHash, t.proxyUrl, t.UserName, t.Password)
+	t.defBranch, err = GitConfig(ctx, "./", repoPath, t.branch, forksResponse.HtmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
 	if err != nil {
 		return
 	}
