@@ -88,14 +88,14 @@ type mavenParams struct {
 }
 
 type Preview struct {
-	Path    string
-	Line    int
-	Content []Content
+	Path    string    `json:"path"`
+	Line    int       `json:"line"`
+	Content []Content `json:"content"`
 }
 
 type Content struct {
-	Line int
-	Text string
+	Line int    `json:"line"`
+	Text string `json:"text"`
 }
 
 type FixModel struct {
