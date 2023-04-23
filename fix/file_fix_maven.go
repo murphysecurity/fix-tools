@@ -98,7 +98,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 				return
 			}
 			p.preview = append(p.preview, Preview{
-				Path:    model.PomPath,
+				Path:    model.relativePomPath,
 				Line:    model.Line,
 				Content: contentList,
 			})
@@ -210,7 +210,7 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 func (p *mavenParams) getFixModelList(params FixParams, pomPathList []string) {
 	for _, comp := range params.CompList {
 		for _, pomPath := range pomPathList {
-			list := GetFixModelList(filepath.Join(params.Dir, pomPath), comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
+			list := GetFixModelList(filepath.Join(params.Dir, pomPath), pomPath, comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
 			p.fixModelList = append(p.fixModelList, list...)
 
 		}
@@ -230,7 +230,7 @@ func (p *mavenParams) getExtensionFix(params FixParams, pomPathList []string) {
 
 		}
 		for _, pomPath := range pomPathList {
-			list := GetExtensionFixModelList(filepath.Join(params.Dir, pomPath), comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
+			list := GetExtensionFixModelList(filepath.Join(params.Dir, pomPath), pomPath, comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
 			p.fixModelList = append(p.fixModelList, list...)
 
 		}
@@ -250,7 +250,7 @@ func (p *mavenParams) getInheritFix(params FixParams, pomPathList []string) {
 
 		}
 		for _, pomPath := range pomPathList {
-			list := GetInheritFixModelList(filepath.Join(params.Dir, pomPath), comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
+			list := GetInheritFixModelList(filepath.Join(params.Dir, pomPath), pomPath, comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
 			p.fixModelList = append(p.fixModelList, list...)
 		}
 	}

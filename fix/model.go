@@ -99,13 +99,14 @@ type Content struct {
 }
 
 type FixModel struct {
-	Line       int
-	OldVersion string
-	NewVersion string
-	GroupId    string
-	ArtifactId string
-	CompName   string
-	PomPath    string
+	Line            int
+	OldVersion      string
+	NewVersion      string
+	GroupId         string
+	ArtifactId      string
+	CompName        string
+	PomPath         string
+	relativePomPath string
 }
 
 type PropertyModel struct {

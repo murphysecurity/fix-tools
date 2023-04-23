@@ -38,12 +38,13 @@ func FindPropertiesLine(pomPath, targetElement, value string) int {
 
 type ChildXMLListener struct {
 	parser.BaseXMLParserListener
-	pomPath      string
-	compName     string
-	newVersion   string
-	compVersion  string
-	modelMap     map[string][]PropertyModel
-	fixModelList []FixModel
+	pomPath         string
+	relativePomPath string
+	compName        string
+	newVersion      string
+	compVersion     string
+	modelMap        map[string][]PropertyModel
+	fixModelList    []FixModel
 }
 
 func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
@@ -51,7 +52,8 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 	if name == "dependency" {
 
 		model := FixModel{
-			PomPath: l.pomPath,
+			PomPath:         l.pomPath,
+			relativePomPath: l.relativePomPath,
 		}
 		if ctx.Content() != nil && len(ctx.Content().AllElement()) > 0 {
 			elements := ctx.Content().AllElement()
@@ -79,11 +81,12 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 					if propertyModel, ok := l.modelMap[model.OldVersion]; ok {
 						for _, m := range propertyModel {
 							newModel := FixModel{
-								Line:       m.Line,
-								OldVersion: model.OldVersion,
-								NewVersion: l.newVersion,
-								CompName:   l.compName,
-								PomPath:    l.pomPath,
+								Line:            m.Line,
+								OldVersion:      model.OldVersion,
+								NewVersion:      l.newVersion,
+								CompName:        l.compName,
+								PomPath:         l.pomPath,
+								relativePomPath: l.relativePomPath,
 							}
 							l.fixModelList = append(l.fixModelList, newModel)
 						}
@@ -100,19 +103,20 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 }
 
-func GetFixModelList(pomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
+func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
 	listener := &ChildXMLListener{
-		pomPath:      pomPath,
-		compName:     compName,
-		compVersion:  compVersion,
-		newVersion:   newVersion,
-		modelMap:     model,
-		fixModelList: nil,
+		pomPath:         pomPath,
+		relativePomPath: relativePomPath,
+		compName:        compName,
+		compVersion:     compVersion,
+		newVersion:      newVersion,
+		modelMap:        model,
+		fixModelList:    nil,
 	}
 	antlr.ParseTreeWalkerDefault.Walk(listener, p.Document())
 	return listener.fixModelList
@@ -120,12 +124,13 @@ func GetFixModelList(pomPath, compName, compVersion, newVersion string, model ma
 
 type ParentXMLListener struct {
 	parser.BaseXMLParserListener
-	pomPath      string
-	compName     string
-	newVersion   string
-	compVersion  string
-	modelMap     map[string][]PropertyModel
-	fixModelList []FixModel
+	pomPath         string
+	relativePomPath string
+	compName        string
+	newVersion      string
+	compVersion     string
+	modelMap        map[string][]PropertyModel
+	fixModelList    []FixModel
 }
 
 func (l *ParentXMLListener) EnterElement(ctx *parser.ElementContext) {
@@ -133,7 +138,7 @@ func (l *ParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 	if name == "parent" {
 
 		model := FixModel{
-			PomPath: l.pomPath,
+			PomPath: l.relativePomPath,
 		}
 		if ctx.Content() != nil && len(ctx.Content().AllElement()) > 0 {
 			elements := ctx.Content().AllElement()
@@ -161,11 +166,12 @@ func (l *ParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 					if propertyModel, ok := l.modelMap[model.OldVersion]; ok {
 						for _, m := range propertyModel {
 							newModel := FixModel{
-								Line:       m.Line,
-								OldVersion: model.OldVersion,
-								NewVersion: l.newVersion,
-								CompName:   l.compName,
-								PomPath:    l.pomPath,
+								Line:            m.Line,
+								OldVersion:      model.OldVersion,
+								NewVersion:      l.newVersion,
+								CompName:        l.compName,
+								PomPath:         l.pomPath,
+								relativePomPath: l.relativePomPath,
 							}
 							l.fixModelList = append(l.fixModelList, newModel)
 						}
@@ -182,19 +188,20 @@ func (l *ParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 }
 
-func GetExtensionFixModelList(pomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
+func GetExtensionFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
 	listener := &ChildXMLListener{
-		pomPath:      pomPath,
-		compName:     compName,
-		compVersion:  compVersion,
-		newVersion:   newVersion,
-		modelMap:     model,
-		fixModelList: nil,
+		pomPath:         pomPath,
+		relativePomPath: relativePomPath,
+		compName:        compName,
+		compVersion:     compVersion,
+		newVersion:      newVersion,
+		modelMap:        model,
+		fixModelList:    nil,
 	}
 	antlr.ParseTreeWalkerDefault.Walk(listener, p.Document())
 	return listener.fixModelList
@@ -202,11 +209,12 @@ func GetExtensionFixModelList(pomPath, compName, compVersion, newVersion string,
 
 type InheritXMLListener struct {
 	parser.BaseXMLParserListener
-	pomPath        string
-	compName       string
-	newVersion     string
-	compVersion    string
-	projectPathMap map[string]string
+	relativePomPath string
+	pomPath         string
+	compName        string
+	newVersion      string
+	compVersion     string
+	projectPathMap  map[string]string
 }
 
 func (l *InheritXMLListener) EnterElement(ctx *parser.ElementContext) {
@@ -215,7 +223,7 @@ func (l *InheritXMLListener) EnterElement(ctx *parser.ElementContext) {
 	if ctx.GetParent() == nil {
 
 		model := FixModel{
-			PomPath: l.pomPath,
+			PomPath: l.relativePomPath,
 		}
 		if ctx.Content() != nil && len(ctx.Content().AllElement()) > 0 {
 			elements := ctx.Content().AllElement()
@@ -243,13 +251,14 @@ func (l *InheritXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 type InheritParentXMLListener struct {
 	parser.BaseXMLParserListener
-	pomPath        string
-	compName       string
-	newVersion     string
-	compVersion    string
-	compNameVarMap map[string]string
-	fixModelList   []FixModel
-	projectPathMap map[string]string
+	pomPath         string
+	relativePomPath string
+	compName        string
+	newVersion      string
+	compVersion     string
+	compNameVarMap  map[string]string
+	fixModelList    []FixModel
+	projectPathMap  map[string]string
 }
 
 func (l *InheritParentXMLListener) EnterElement(ctx *parser.ElementContext) {
@@ -257,7 +266,7 @@ func (l *InheritParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 	if name == "parent" {
 
 		model := FixModel{
-			PomPath: l.pomPath,
+			PomPath: l.relativePomPath,
 		}
 		if ctx.Content() != nil && len(ctx.Content().AllElement()) > 0 {
 			elements := ctx.Content().AllElement()
@@ -305,7 +314,7 @@ func (l *InheritParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 	if name == "dependency" {
 
 		model := FixModel{
-			PomPath: l.pomPath,
+			PomPath: l.relativePomPath,
 		}
 		if ctx.Content() != nil && len(ctx.Content().AllElement()) > 0 {
 			elements := ctx.Content().AllElement()
@@ -376,18 +385,19 @@ func (l *InheritParentBodyXMLListener) EnterElement(ctx *parser.ElementContext) 
 
 }
 
-func GetInheritFixModelList(pomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
+func GetInheritFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
 	models := make([]FixModel, 0)
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
 	listener := &InheritParentXMLListener{
-		pomPath:      pomPath,
-		compName:     compName,
-		compVersion:  compVersion,
-		newVersion:   newVersion,
-		fixModelList: nil,
+		pomPath:         pomPath,
+		relativePomPath: relativePomPath,
+		compName:        compName,
+		compVersion:     compVersion,
+		newVersion:      newVersion,
+		fixModelList:    nil,
 	}
 	antlr.ParseTreeWalkerDefault.Walk(listener, p.Document())
 	if varName, ok := listener.compNameVarMap[compName]; ok {
