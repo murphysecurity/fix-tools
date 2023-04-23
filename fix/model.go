@@ -54,7 +54,7 @@ func (t *FixParams) check() error {
 	case "yarn":
 	case "python":
 	default:
-		return errors.New("不支持的包管理器")
+		return errors.New("不支持的包管理器: " + t.PackageManager)
 	}
 
 	switch t.RepoType {
@@ -70,7 +70,7 @@ func (t *FixParams) check() error {
 		}
 
 	default:
-		return errors.New("不支持的包管理器: " + t.RepoType)
+		return errors.New("不支持的仓库类型: " + t.RepoType)
 	}
 	if t.TimeOut == 0 {
 		t.TimeOut = 60 * time.Second
