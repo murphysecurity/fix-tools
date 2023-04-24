@@ -398,6 +398,8 @@ func GetInheritFixModelList(pomPath, relativePomPath, compName, compVersion, new
 		compVersion:     compVersion,
 		newVersion:      newVersion,
 		fixModelList:    nil,
+		projectPathMap:  make(map[string]string, 0),
+		compNameVarMap:  make(map[string]string, 0),
 	}
 	antlr.ParseTreeWalkerDefault.Walk(listener, p.Document())
 	if varName, ok := listener.compNameVarMap[compName]; ok {
