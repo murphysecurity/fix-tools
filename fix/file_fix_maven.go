@@ -182,23 +182,26 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 		}
 		doc, err := xmlquery.Parse(f)
 		properties := xmlquery.Find(doc, "//properties")
-		node0 := properties[0]
-		propertiesChilds := xmlquery.Find(node0, "child::*")
-		for _, item := range propertiesChilds {
-			model := PropertyModel{
-				Line:       FindPropertiesLine(joinPath, item.Data, item.InnerText()),
-				OldVersion: item.InnerText(),
-				TagName:    item.Data,
-				PomPath:    pomPath,
-			}
-			if models, ok := p.propertyMap[item.Data]; ok {
-				models = append(models, model)
-				p.propertyMap[item.Data] = models
-			} else {
+		if len(properties)>0 {
+			node0 := properties[0]
+			propertiesChilds := xmlquery.Find(node0, "child::*")
+			for _, item := range propertiesChilds {
+				model := PropertyModel{
+					Line:       FindPropertiesLine(joinPath, item.Data, item.InnerText()),
+					OldVersion: item.InnerText(),
+					TagName:    item.Data,
+					PomPath:    pomPath,
+				}
+				if models, ok := p.propertyMap[item.Data]; ok {
+					models = append(models, model)
+					p.propertyMap[item.Data] = models
+				} else {
 
-				models := make([]PropertyModel, 0)
-				models = append(models, model)
-				p.propertyMap[item.Data] = models
+					models := make([]PropertyModel, 0)
+					models = append(models, model)
+					p.propertyMap[item.Data] = models
+				}
+
 			}
 
 		}
