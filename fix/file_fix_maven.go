@@ -25,7 +25,7 @@ func (t FixParams) MavenFix() (preview []Preview, err error) {
 			return nil
 		}
 		if d.Name() == "pom.xml" {
-			pomPathList = append(pomPathList, d.Name())
+			pomPathList = append(pomPathList, path)
 		}
 		return nil
 	})
