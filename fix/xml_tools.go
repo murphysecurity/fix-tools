@@ -17,9 +17,12 @@ type SimpleXMLListener struct {
 }
 
 func (l *SimpleXMLListener) ExitElement(ctx *parser.ElementContext) {
-	if ctx.Name(0).GetText() == l.targetElement && ctx.Content().GetText() == l.value {
-		l.line = ctx.Name(0).GetSymbol().GetLine()
+	if ctx.Content() != nil {
+		if ctx.Name(0).GetText() == l.targetElement && ctx.Content().GetText() == l.value {
+			l.line = ctx.Name(0).GetSymbol().GetLine()
+		}
 	}
+
 }
 
 func FindPropertiesLine(pomPath, targetElement, value string) int {
@@ -229,17 +232,20 @@ func (l *InheritXMLListener) EnterElement(ctx *parser.ElementContext) {
 			elements := ctx.Content().AllElement()
 			for _, element := range elements {
 				text := element.Name(0).GetText()
-				value := element.Content().GetText()
-				if text == "groupId" {
-					model.GroupId = value
+				if element.Content() != nil {
+					value := element.Content().GetText()
+					if text == "groupId" {
+						model.GroupId = value
+					}
+					if text == "artifactId" {
+						model.ArtifactId = value
+					}
+					if text == "version" {
+						model.OldVersion = value
+						model.Line = element.Name(0).GetSymbol().GetLine()
+					}
 				}
-				if text == "artifactId" {
-					model.ArtifactId = value
-				}
-				if text == "version" {
-					model.OldVersion = value
-					model.Line = element.Name(0).GetSymbol().GetLine()
-				}
+
 			}
 		}
 		if model.Line != 0 && model.GroupId != "" && model.ArtifactId != "" && model.OldVersion != "" {
@@ -272,17 +278,20 @@ func (l *InheritParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 			elements := ctx.Content().AllElement()
 			for _, element := range elements {
 				text := element.Name(0).GetText()
-				value := element.Content().GetText()
-				if text == "groupId" {
-					model.GroupId = value
+				if element.Content() != nil {
+					value := element.Content().GetText()
+					if text == "groupId" {
+						model.GroupId = value
+					}
+					if text == "artifactId" {
+						model.ArtifactId = value
+					}
+					if text == "version" {
+						model.OldVersion = value
+						model.Line = element.Name(0).GetSymbol().GetLine()
+					}
 				}
-				if text == "artifactId" {
-					model.ArtifactId = value
-				}
-				if text == "version" {
-					model.OldVersion = value
-					model.Line = element.Name(0).GetSymbol().GetLine()
-				}
+
 			}
 		}
 		if model.Line != 0 && model.GroupId != "" && model.ArtifactId != "" && model.OldVersion != "" {
@@ -320,17 +329,20 @@ func (l *InheritParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 			elements := ctx.Content().AllElement()
 			for _, element := range elements {
 				text := element.Name(0).GetText()
-				value := element.Content().GetText()
-				if text == "groupId" {
-					model.GroupId = value
+				if element.Content() != nil {
+					value := element.Content().GetText()
+					if text == "groupId" {
+						model.GroupId = value
+					}
+					if text == "artifactId" {
+						model.ArtifactId = value
+					}
+					if text == "version" {
+						model.OldVersion = value
+						model.Line = element.Name(0).GetSymbol().GetLine()
+					}
 				}
-				if text == "artifactId" {
-					model.ArtifactId = value
-				}
-				if text == "version" {
-					model.OldVersion = value
-					model.Line = element.Name(0).GetSymbol().GetLine()
-				}
+
 			}
 		}
 
@@ -360,17 +372,20 @@ func (l *InheritParentBodyXMLListener) EnterElement(ctx *parser.ElementContext) 
 			elements := ctx.Content().AllElement()
 			for _, element := range elements {
 				text := element.Name(0).GetText()
-				value := element.Content().GetText()
-				if text == "groupId" {
-					model.GroupId = value
+				if element.Content() != nil {
+					value := element.Content().GetText()
+					if text == "groupId" {
+						model.GroupId = value
+					}
+					if text == "artifactId" {
+						model.ArtifactId = value
+					}
+					if text == "version" {
+						model.OldVersion = value
+						model.Line = element.Name(0).GetSymbol().GetLine()
+					}
 				}
-				if text == "artifactId" {
-					model.ArtifactId = value
-				}
-				if text == "version" {
-					model.OldVersion = value
-					model.Line = element.Name(0).GetSymbol().GetLine()
-				}
+
 			}
 		}
 
