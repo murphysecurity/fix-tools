@@ -47,7 +47,20 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 			return "", err
 		}
 	} else {
-		_, err = RunGitCommand(ctx, path, "git", "clone", gitRemote, repoPath, "http.proxy="+proxyUrl)
+
+		_, err = RunGitCommand(ctx, path, "git", "config", "http.proxy", proxyUrl)
+
+		if err != nil {
+			return "", err
+		}
+
+		_, err = RunGitCommand(ctx, path, "git", "config", "https.proxy", proxyUrl)
+
+		if err != nil {
+			return "", err
+		}
+
+		_, err = RunGitCommand(ctx, path, "git", "clone", gitRemote, repoPath)
 
 		if err != nil {
 			return "", err

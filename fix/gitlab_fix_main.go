@@ -60,7 +60,7 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 		return
 	}
 	//  提交文件
-	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream origin", branch)
+	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", "origin", branch)
 	if err != nil {
 		return
 	}

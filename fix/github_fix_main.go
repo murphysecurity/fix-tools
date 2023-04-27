@@ -30,7 +30,7 @@ func (t *FixParams) GithubFix() (preview []Preview, err error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), t.TimeOut)
 	defer cancel()
-	path := "./fix_path"
+	path := "./"
 	gitRemote := fmt.Sprintf("https://github.com/%s/%s.git", t.UserName, t.Repo)
 
 	// 获取github连接

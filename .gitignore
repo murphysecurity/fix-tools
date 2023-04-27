@@ -21,3 +21,5 @@ murphy_oscs
 /github基本信息.json
 *.tmp
 /static/fix_vuln_project/
+
+/fix/fix_test.go

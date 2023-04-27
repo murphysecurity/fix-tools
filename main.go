@@ -8,12 +8,12 @@ func main() {
 	params := fix.FixParams{
 		ShowOnly: true,
 		CompList: []fix.Comp{{
-			CompName:    "com.alibaba:fastjson",
-			CompVersion: "1.2.47",
+			CompName:    "org.springframework.boot:spring-boot-configuration-processor",
+			CompVersion: "2.0.5.RELEASE",
 		}},
 		PackageManager: "maven",
 		RepoType:       "local",
-		Dir:            "E:\\project\\java_project\\develop\\itheima_health_group11",
+		Dir:            "E:\\project\\java_project\\test\\java",
 	}
 	preview, err := params.Fix()
 	if err != nil {
@@ -23,7 +23,6 @@ func main() {
 		print(p.Line)
 		print("--------")
 		println(p.Path)
-
 		for _, content := range p.Content {
 			print(content.Line)
 			print("    ")

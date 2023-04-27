@@ -3,6 +3,7 @@ package fix
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -30,6 +31,11 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	if err != nil {
 		return
 	}
+	if forksResponse.Id == 0 {
+		err = errors.New("gitee fork 失败")
+		return
+	}
+	t.defBranch = forksResponse.Parent.DefaultBranch
 	// git配置 克隆文件
 	respoName := t.UserName + "_" + strconv.FormatInt(time.Now().Unix(), 10)
 	repoPath := filepath.Join("./", respoName)
@@ -37,7 +43,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	t.defBranch, err = GitConfig(ctx, "./", repoPath, t.branch, forksResponse.HtmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
+	_, err = GitConfig(ctx, "./", repoPath, t.branch, forksResponse.HtmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
 	if err != nil {
 		return
 	}
@@ -69,7 +75,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 		return
 	}
 	//  提交文件
-	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream origin", t.branch)
+	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", "origin", t.branch)
 	if err != nil {
 		return
 	}

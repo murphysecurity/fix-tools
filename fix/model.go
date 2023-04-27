@@ -8,35 +8,36 @@ import (
 
 type FixParams struct {
 	// 必填
-	ShowOnly       bool          `json:"show_only"` // 仅展示pr预览 不进行真的pr提交
+	ShowOnly       bool          // 仅展示pr预览 不进行真的pr提交
 	TimeOut        time.Duration //超时时间 单位秒 默认60秒
 	RepoType       string        // 仓库类型 github gitee gitlab local
 	CompList       []Comp
-	PackageManager string `json:"package_manager"` // 包管理器
+	PackageManager string // 包管理器
 	// local必填
 	Dir string // 检测类型中需要指定文件夹
 
 	// 非local必填
 	ProxyUrl    string // 可能需要的代理
-	GitlabUrl   string `json:"gitlab_url"` //   Gitlab地址
-	CommitHash  string `json:"commitHash"` //   提交的hash
+	GitlabUrl   string //   Gitlab地址
+	CommitHash  string //   提交的hash
 	TargetOwner string // 目标 仓库拥有者
-	Owner       string `json:"owner"` //   当前用户 仓库拥有者
-	Repo        string `json:"repo"`  //   仓库路径 不变
+	Owner       string //   当前用户 仓库拥有者
+	Repo        string //   仓库路径 不变
 
 	// 仓库类型 用户相关
-	UserName  string `json:"user_name"` //   设置git用户名
+	UserName  string //   设置git用户名
 	Password  string
-	UserEmail string `json:"user_email"` //   设置git用户邮箱
-	Token     string `json:"token"`      // GitHub用户token Gitee用户AccessToken  Gitlab用户token
+	UserEmail string //   设置git用户邮箱
+	Token     string // GitHub用户token Gitee用户AccessToken  Gitlab用户token
 
 	// pr提交相关
-	Title string `json:"title"` // pr 标题
-	Body  string `json:"body"`  // pr 内容
+	Title string // pr 标题
+	Body  string // pr 内容
 
 	// 内部使用不暴露
 	branch    string
 	defBranch string
+	delDir    string
 }
 
 type Comp struct {
