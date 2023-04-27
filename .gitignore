@@ -24,3 +24,7 @@ murphy_oscs
 
 /fix/fix_test.go
 fix/fix_test.go
+
+./fix_test.go
+fix_test.go
+/fix_test.go
