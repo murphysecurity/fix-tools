@@ -23,3 +23,4 @@ murphy_oscs
 /static/fix_vuln_project/
 
 /fix/fix_test.go
+fix/fix_test.go
