@@ -31,11 +31,38 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	if err != nil {
 		return
 	}
-	if forksResponse.Id == 0 {
+	repoInfoResponse := new(RepoInfoResponse)
+	if len(forksResponse.Message) != 0 {
+		infoResp, err := getInfo(t.TargetOwner, t.Repo)
+		if err != nil {
+			return
+		}
+		respByte2, err := io.ReadAll(infoResp.Body)
+		if err != nil {
+			return
+		}
+
+		err = json.Unmarshal(respByte2, repoInfoResponse)
+		if err != nil {
+			return
+		}
+	}
+
+	if forksResponse.Id == 0 && repoInfoResponse.Id == 0 {
 		err = errors.New("gitee fork 失败")
 		return
 	}
-	t.defBranch = forksResponse.Parent.DefaultBranch
+	htmlUrl := ""
+	if forksResponse.Id != 0 {
+		htmlUrl = forksResponse.HtmlUrl
+		t.defBranch = forksResponse.Parent.DefaultBranch
+	}
+
+	if repoInfoResponse.Id != 0 {
+		htmlUrl = repoInfoResponse.Parent.HtmlUrl
+		t.defBranch = repoInfoResponse.Parent.DefaultBranch
+	}
+
 	// git配置 克隆文件
 	respoName := t.UserName + "_" + strconv.FormatInt(time.Now().Unix(), 10)
 	repoPath := filepath.Join("./", respoName)
@@ -43,7 +70,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	_, err = GitConfig(ctx, "./", repoPath, t.branch, forksResponse.HtmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
+	_, err = GitConfig(ctx, "./", repoPath, t.branch, htmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
 	if err != nil {
 		return
 	}
@@ -89,6 +116,11 @@ func fork(accessToken, owner, repo string) (resp *http.Response, err error) {
 	sprintf := fmt.Sprintf("{\n    \"access_token\":\"%s\"\n}", accessToken)
 	reader := strings.NewReader(sprintf)
 	return http.Post(url, "application/json", reader)
+}
+
+func getInfo(owner, repo string) (resp *http.Response, err error) {
+	url := fmt.Sprintf("https://gitee.com/api/v5/repos/%s/%s", owner, repo)
+	return http.Get(url)
 }
 
 func CreatePullRequest(accessToken, owner, repo, title, body, currentBranch, targetBranch, currentOwner string) (resp *http.Response, err error) {
