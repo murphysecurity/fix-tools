@@ -15,14 +15,20 @@ import (
 
 func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 
+	var (
+		resp      *http.Response
+		infoResp  *http.Response
+		respByte  []byte
+		respByte2 []byte
+	)
 	ctx, cancel := context.WithTimeout(context.Background(), t.TimeOut)
 	defer cancel()
 
-	resp, err := fork(t.Token, t.TargetOwner, t.Repo)
+	resp, err = fork(t.Token, t.TargetOwner, t.Repo)
 	if err != nil {
 		return
 	}
-	respByte, err := io.ReadAll(resp.Body)
+	respByte, err = io.ReadAll(resp.Body)
 	if err != nil {
 		return
 	}
@@ -33,11 +39,11 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	}
 	repoInfoResponse := new(RepoInfoResponse)
 	if len(forksResponse.Message) != 0 {
-		infoResp, err := getInfo(t.TargetOwner, t.Repo)
+		infoResp, err = getInfo(t.TargetOwner, t.Repo)
 		if err != nil {
 			return
 		}
-		respByte2, err := io.ReadAll(infoResp.Body)
+		respByte2, err = io.ReadAll(infoResp.Body)
 		if err != nil {
 			return
 		}
@@ -59,7 +65,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	}
 
 	if repoInfoResponse.Id != 0 {
-		htmlUrl = repoInfoResponse.Parent.HtmlUrl
+		htmlUrl = repoInfoResponse.HtmlUrl
 		t.defBranch = repoInfoResponse.Parent.DefaultBranch
 	}
 
