@@ -102,7 +102,8 @@ func RunGitCommand(ctx context.Context, path, name string, arg ...string) (strin
 		if ctx.Err() != nil && ctx.Err() == context.DeadlineExceeded {
 			return "command timeout", errors.New("command timeout")
 		}
-		return string(out), err
+		newErr := errors.New(string(out) + "  ==  " + err.Error())
+		return string(out), newErr
 	} else {
 		return string(out), nil
 	}
