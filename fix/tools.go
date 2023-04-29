@@ -48,24 +48,24 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 		}
 	} else {
 
-		//_, err = RunGitCommand(ctx, path, "git", "config", "http.proxy=", proxyUrl)
-		//
-		//if err != nil {
-		//	err = errors.New(" 设置代理 失败  " + err.Error() + "http.proxy  " + proxyUrl)
-		//	return "", err
-		//}
-		//
-		//_, err = RunGitCommand(ctx, path, "git", "config", "https.proxy=", proxyUrl)
-		//
-		//if err != nil {
-		//	err = errors.New(" 设置代理 失败  " + err.Error() + "https.proxy  " + proxyUrl)
-		//	return "", err
-		//}
-
 		_, err = RunGitCommand(ctx, path, "git", "clone", "-c", "http.proxy="+proxyUrl, "-c", "https.proxy="+proxyUrl, gitRemote, repoPath)
 
 		if err != nil {
 			err = errors.New(" clone 失败  " + err.Error())
+			return "", err
+		}
+
+		_, err = RunGitCommand(ctx, path, "git", "config", "http.proxy=", proxyUrl)
+
+		if err != nil {
+			err = errors.New(" 设置代理 失败  " + err.Error() + "http.proxy  " + proxyUrl)
+			return "", err
+		}
+
+		_, err = RunGitCommand(ctx, path, "git", "config", "https.proxy=", proxyUrl)
+
+		if err != nil {
+			err = errors.New(" 设置代理 失败  " + err.Error() + "https.proxy  " + proxyUrl)
 			return "", err
 		}
 
