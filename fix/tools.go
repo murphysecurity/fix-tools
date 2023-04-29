@@ -55,14 +55,14 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 			return "", err
 		}
 
-		_, err = RunGitCommand(ctx, repoPath, "git", "config", "http.proxy=", proxyUrl)
+		_, err = RunGitCommand(ctx, repoPath, "git", "config", "http.proxy", proxyUrl)
 
 		if err != nil {
 			err = errors.New(" 设置代理 失败  " + err.Error() + "http.proxy  " + proxyUrl)
 			return "", err
 		}
 
-		_, err = RunGitCommand(ctx, repoPath, "git", "config", "https.proxy=", proxyUrl)
+		_, err = RunGitCommand(ctx, repoPath, "git", "config", "https.proxy", proxyUrl)
 
 		if err != nil {
 			err = errors.New(" 设置代理 失败  " + err.Error() + "https.proxy  " + proxyUrl)
