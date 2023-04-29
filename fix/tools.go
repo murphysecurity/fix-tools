@@ -44,6 +44,7 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 	if len(proxyUrl) == 0 {
 		_, err = RunGitCommand(ctx, path, "git", "clone", gitRemote, repoPath)
 		if err != nil {
+			err = errors.New(" clone 失败  " + err.Error())
 			return "", err
 		}
 	} else {
@@ -51,18 +52,21 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 		_, err = RunGitCommand(ctx, path, "git", "config", "http.proxy", proxyUrl)
 
 		if err != nil {
+			err = errors.New(" 设置代理 失败  " + err.Error())
 			return "", err
 		}
 
 		_, err = RunGitCommand(ctx, path, "git", "config", "https.proxy", proxyUrl)
 
 		if err != nil {
+			err = errors.New(" 设置代理 失败  " + err.Error())
 			return "", err
 		}
 
 		_, err = RunGitCommand(ctx, path, "git", "clone", gitRemote, repoPath)
 
 		if err != nil {
+			err = errors.New(" clone 失败  " + err.Error())
 			return "", err
 		}
 
@@ -77,6 +81,7 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 	err = cmd.Run()
 
 	if err != nil {
+		err = errors.New(" 获取默认分支 失败  " + err.Error())
 		return "", err
 	}
 	if len(stdout.String()) == 0 {
@@ -87,6 +92,7 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 	_, err = RunGitCommand(ctx, repoPath, "git", "checkout", "-b", branch, commitHash)
 
 	if err != nil {
+		err = errors.New(" checkout 失败  " + err.Error())
 		return defBranch, err
 	}
 
