@@ -1,7 +1,6 @@
 package fix
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"os"
@@ -74,20 +73,22 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 
 	cmd := exec.CommandContext(ctx, "git", "branch")
 	cmd.Dir = path
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err = cmd.Run()
+	out, err := cmd.Output()
 
 	if err != nil {
-		err = errors.New(" 获取默认分支 失败  " + err.Error())
+		if exitError, ok := err.(*exec.ExitError); ok {
+			newErr := errors.New(string(out) + " 获取默认分支 失败   ==  " + exitError.Error() + string(exitError.Stderr))
+			return string(out), newErr
+		}
+
+		err = errors.New(" 获取默认分支 失败  " + string(out) + err.Error())
 		return "", err
 	}
-	if len(stdout.String()) == 0 {
+
+	if len(string(out)) == 0 {
 		return "", errors.New("无法获得默认分支")
 	}
-	defBranch := strings.TrimSpace(strings.ReplaceAll(stdout.String(), "*", ""))
+	defBranch := strings.TrimSpace(strings.ReplaceAll(string(out), "*", ""))
 
 	_, err = RunGitCommand(ctx, repoPath, "git", "checkout", "-b", branch, commitHash)
 
