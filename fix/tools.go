@@ -102,6 +102,32 @@ func RunGitCommand(ctx context.Context, path, name string, arg ...string) (strin
 		if ctx.Err() != nil && ctx.Err() == context.DeadlineExceeded {
 			return "command timeout", errors.New("command timeout")
 		}
+
+		if exitError, ok := err.(*exec.ExitError); ok {
+			newErr := errors.New(string(out) + "  ==  " + exitError.Error() + string(exitError.Stderr))
+			return string(out), newErr
+		}
+		newErr := errors.New(string(out) + "  ==  " + err.Error())
+		return string(out), newErr
+	} else {
+		return string(out), nil
+	}
+}
+
+// 执行任意cmd命令的封装
+func RunGiteePush(ctx context.Context, path, name string, arg ...string) (string, error) {
+	cmd := exec.CommandContext(ctx, name, arg...)
+	cmd.Dir = path
+	if out, err := cmd.Output(); err != nil {
+		//检测报错是否是因为超时引起的
+		if ctx.Err() != nil && ctx.Err() == context.DeadlineExceeded {
+			return "command timeout", errors.New("command timeout")
+		}
+
+		if exitError, ok := err.(*exec.ExitError); ok {
+			newErr := errors.New(string(out) + "  ==  " + exitError.Error() + string(exitError.Stderr))
+			return string(out), newErr
+		}
 		newErr := errors.New(string(out) + "  ==  " + err.Error())
 		return string(out), newErr
 	} else {

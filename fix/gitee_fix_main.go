@@ -5,7 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
+	githttp "gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 	"io"
+	"log"
 	"net/http"
 	"path/filepath"
 	"strconv"
@@ -16,10 +20,11 @@ import (
 func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 
 	var (
-		resp      *http.Response
-		infoResp  *http.Response
-		respByte  []byte
-		respByte2 []byte
+		resp          *http.Response
+		infoResp      *http.Response
+		respByte      []byte
+		respByte2     []byte
+		giteeUsername string
 	)
 	ctx, cancel := context.WithTimeout(context.Background(), t.TimeOut)
 	defer cancel()
@@ -61,11 +66,13 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	htmlUrl := ""
 	if forksResponse.Id != 0 {
 		htmlUrl = forksResponse.HtmlUrl
+		giteeUsername = forksResponse.Namespace.Path
 		t.defBranch = forksResponse.Parent.DefaultBranch
 	}
 
 	if repoInfoResponse.Id != 0 {
 		htmlUrl = repoInfoResponse.HtmlUrl
+		giteeUsername = repoInfoResponse.Namespace.Path
 		t.defBranch = repoInfoResponse.Parent.DefaultBranch
 	}
 
@@ -107,11 +114,36 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	if err != nil {
 		return
 	}
-	//  提交文件
-	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", "origin", t.branch)
+
+	r, err := git.PlainOpen(repoPath)
 	if err != nil {
 		return
 	}
+	auth := &githttp.BasicAuth{
+		Username: giteeUsername,
+		Password: t.Token,
+	}
+	cfg := &config.RemoteConfig{
+		Name: "origin",
+		URLs: []string{htmlUrl},
+	}
+	_, err = r.CreateRemote(cfg)
+	if err != nil && err != git.ErrRemoteExists {
+		log.Fatal(err)
+	}
+
+	err = r.Push(&git.PushOptions{
+		RemoteName: "origin",
+		Auth:       auth,
+	})
+	if err != nil {
+		return
+	}
+	//  提交文件
+	//_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", "origin", t.branch)
+	//if err != nil {
+	//	return
+	//}
 
 	_, err = CreatePullRequest(t.Token, t.TargetOwner, t.Repo, t.Title, t.Body, t.branch, t.defBranch, forksResponse.Namespace.Path)
 	return
