@@ -9,7 +9,6 @@ import (
 	"github.com/go-git/go-git/v5/config"
 	githttp "gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 	"io"
-	"log"
 	"net/http"
 	"path/filepath"
 	"strconv"
@@ -85,38 +84,45 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	}()
 	_, err = GitConfig(ctx, "./", repoPath, t.branch, htmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
 	if err != nil {
+		err = errors.New( " 克隆文件失败  " + err.Error())
 		return
 	}
 
 	// 设置git邮箱和用户名
 	_, err = RunGitCommand(ctx, repoPath, "git", "config", "user.email", t.UserEmail)
 	if err != nil {
+		err = errors.New( " 设置git邮箱和用户名失败  " + err.Error())
 		return
 	}
 	_, err = RunGitCommand(ctx, repoPath, "git", "config", "user.name", t.UserName)
 	if err != nil {
+		err = errors.New( " 设置git邮箱和用户名失败  " + err.Error())
 		return
 	}
 	t.Dir = repoPath
 	preview, err = t.LocalFix()
 	if err != nil {
+		err = errors.New( " 寻找修复路径失败  " + err.Error())
 		return
 	}
 
 	// 查看是否有修改
 	_, err = RunGitCommand(ctx, repoPath, "git", "status", "--short")
 	if err != nil {
+		err = errors.New( " 查看是否有修改   失败  " + err.Error())
 		return
 	}
 
 	// commit代码,要执行的参数 commit msg
 	_, err = RunGitCommand(ctx, repoPath, "git", "commit", "-am", "fix vuln")
 	if err != nil {
+		err = errors.New( " commit代码   失败  " + err.Error())
 		return
 	}
 
 	r, err := git.PlainOpen(repoPath)
 	if err != nil {
+		err = errors.New( " 获取本地远程仓库   失败  " + err.Error())
 		return
 	}
 	auth := &githttp.BasicAuth{
@@ -129,7 +135,8 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	}
 	_, err = r.CreateRemote(cfg)
 	if err != nil && err != git.ErrRemoteExists {
-		log.Fatal(err)
+		err = errors.New( " 连接远程仓库   失败  " + err.Error())
+		return
 	}
 
 	err = r.Push(&git.PushOptions{
@@ -137,6 +144,7 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 		Auth:       auth,
 	})
 	if err != nil {
+		err = errors.New( " 推送代码  失败  " + err.Error())
 		return
 	}
 	//  提交文件
@@ -145,7 +153,10 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	//	return
 	//}
 
-	_, err = CreatePullRequest(t.Token, t.TargetOwner, t.Repo, t.Title, t.Body, t.branch, t.defBranch, forksResponse.Namespace.Path)
+	_, err = CreatePullRequest(t.Token, t.TargetOwner, t.Repo, t.Title, t.Body, t.branch, t.defBranch, forksResponse.Namespace.Path
+	if err != nil {
+		err = errors.New( " 提交pr  失败  " + err.Error())
+	}
 	return
 }
 
