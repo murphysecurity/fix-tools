@@ -77,11 +77,11 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 
 	if err != nil {
 		if exitError, ok := err.(*exec.ExitError); ok {
-			newErr := errors.New(string(out) + " 获取默认分支 失败   ==  " + exitError.Error() + string(exitError.Stderr))
+			newErr := errors.New(string(out) + " 获取默认分支 失败   ==  " + exitError.Error() + string(exitError.Stderr) + " repoPath--" + repoPath)
 			return string(out), newErr
 		}
 
-		err = errors.New(" 获取默认分支 失败  " + string(out) + err.Error())
+		err = errors.New(" 获取默认分支 失败  " + string(out) + err.Error() + " repoPath--" + repoPath)
 		return "", err
 	}
 
