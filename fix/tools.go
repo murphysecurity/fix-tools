@@ -72,7 +72,7 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 	}
 
 	cmd := exec.CommandContext(ctx, "git", "branch")
-	cmd.Dir = path
+	cmd.Dir = repoPath
 	out, err := cmd.Output()
 
 	if err != nil {
