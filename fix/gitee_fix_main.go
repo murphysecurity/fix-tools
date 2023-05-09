@@ -16,13 +16,15 @@ import (
 	"time"
 )
 
-func (t *FixParams) GiteeFix() (preview []Preview, err error) {
+func (t *FixParams) GiteeFix() (prUrl string, preview []Preview, err error) {
 
 	var (
 		resp          *http.Response
 		infoResp      *http.Response
+		prResp        *http.Response
 		respByte      []byte
 		respByte2     []byte
+		respByte3     []byte
 		giteeUsername string
 	)
 	ctx, cancel := context.WithTimeout(context.Background(), t.TimeOut)
@@ -153,10 +155,19 @@ func (t *FixParams) GiteeFix() (preview []Preview, err error) {
 	//	return
 	//}
 
-	_, err = CreatePullRequest(t.Token, t.TargetOwner, t.Repo, t.Title, t.Body, t.branch, t.defBranch, forksResponse.Namespace.Path)
+	prResp, err = CreatePullRequest(t.Token, t.TargetOwner, t.Repo, t.Title, t.Body, t.branch, t.defBranch, forksResponse.Namespace.Path)
 	if err != nil {
 		err = errors.New(" 提交pr  失败  " + err.Error())
+		return
 	}
+	respByte3, _ = io.ReadAll(prResp.Body)
+	createPullResponse := new(CreatePullResponse)
+	err = json.Unmarshal(respByte3, createPullResponse)
+	if err != nil {
+		return
+	}
+	prUrl = createPullResponse.HtmlUrl
+
 	return
 }
 

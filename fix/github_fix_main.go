@@ -19,7 +19,7 @@ import (
 	"time"
 )
 
-func (t *FixParams) GithubFix() (preview []Preview, err error) {
+func (t *FixParams) GithubFix() (prUrl string, preview []Preview, err error) {
 	var (
 		client *github.Client
 
@@ -102,7 +102,7 @@ func (t *FixParams) GithubFix() (preview []Preview, err error) {
 	}
 	// 提交pr
 
-	_, _, _, _, err = CreatePr(ctx, client, t.TargetOwner, t.Repo, t.UserName+":"+branch, targetDefaultBranch, t.Title, t.Body)
+	prUrl, _, _, _, err = CreatePr(ctx, client, t.TargetOwner, t.Repo, t.UserName+":"+branch, targetDefaultBranch, t.Title, t.Body)
 	return
 }
 

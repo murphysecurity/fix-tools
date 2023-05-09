@@ -1,15 +1,15 @@
 package fix
 
-func (t *FixParams) Fix() (preview []Preview, err error) {
+func (t *FixParams) Fix() (prUrl string,preview []Preview, err error) {
 	err = t.check()
 	if err != nil {
 		return
 	}
 	switch t.RepoType {
 	case "github":
-		preview, err = t.GithubFix()
+		prUrl, preview, err = t.GithubFix()
 	case "gitee":
-		preview, err = t.GiteeFix()
+		prUrl,preview, err = t.GiteeFix()
 	case "gitlab":
 		preview, err = t.GitlabFix()
 	case "local":
