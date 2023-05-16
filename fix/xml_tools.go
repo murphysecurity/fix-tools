@@ -83,15 +83,18 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 					if propertyModel, ok := l.modelMap[model.OldVersion]; ok {
 						for _, m := range propertyModel {
-							newModel := FixModel{
-								Line:            m.Line,
-								OldVersion:      model.OldVersion,
-								NewVersion:      l.newVersion,
-								CompName:        l.compName,
-								PomPath:         l.pomPath,
-								relativePomPath: l.relativePomPath,
+							if m.OldVersion == l.compVersion {
+								newModel := FixModel{
+									Line:            m.Line,
+									OldVersion:      model.OldVersion,
+									NewVersion:      l.newVersion,
+									CompName:        l.compName,
+									PomPath:         l.pomPath,
+									relativePomPath: l.relativePomPath,
+								}
+								l.fixModelList = append(l.fixModelList, newModel)
 							}
-							l.fixModelList = append(l.fixModelList, newModel)
+
 						}
 					}
 				} else {

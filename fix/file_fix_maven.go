@@ -184,7 +184,9 @@ func (p *mavenParams) getFixModelList(params FixParams, pomPathList []string) {
 	for _, comp := range params.CompList {
 		for _, pomPath := range pomPathList {
 			list := GetFixModelList(filepath.Join(params.Dir, pomPath), pomPath, comp.CompName, comp.CompVersion, comp.MinFixVersion, p.propertyMap)
-			p.fixModelList = append(p.fixModelList, list...)
+			if len(list) > 0 {
+				p.fixModelList = append(p.fixModelList, list...)
+			}
 
 		}
 	}
