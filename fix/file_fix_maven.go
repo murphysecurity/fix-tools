@@ -151,6 +151,9 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 			return
 		}
 		doc, err := xmlquery.Parse(f)
+		if err != nil {
+			return
+		}
 		properties := xmlquery.Find(doc, "//properties")
 		if len(properties) > 0 {
 			node0 := properties[0]

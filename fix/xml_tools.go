@@ -6,6 +6,7 @@ import (
 	"github.com/murphysecurity/fix-tools/fix/xml/parser"
 	"io"
 	"net/http"
+	"path/filepath"
 	"strings"
 )
 
@@ -29,8 +30,13 @@ func FindPropertiesLine(pomPath, targetElement, value string) int {
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
+	liste := &MyErrorListener{suppress: true}
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(liste)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
+	p.RemoveErrorListeners()
+	p.AddErrorListener(liste)
 	listener := &SimpleXMLListener{
 		targetElement: targetElement,
 		value:         value,
@@ -84,13 +90,14 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 					if propertyModel, ok := l.modelMap[model.OldVersion]; ok {
 						for _, m := range propertyModel {
 							if m.OldVersion == l.compVersion {
+
 								newModel := FixModel{
 									Line:            m.Line,
 									OldVersion:      model.OldVersion,
 									NewVersion:      l.newVersion,
 									CompName:        l.compName,
-									PomPath:         l.pomPath,
-									relativePomPath: l.relativePomPath,
+									PomPath:         filepath.Join(strings.ReplaceAll(filepath.ToSlash(l.pomPath), l.relativePomPath, ""), m.PomPath),
+									relativePomPath: m.PomPath,
 								}
 								l.fixModelList = append(l.fixModelList, newModel)
 							}
@@ -113,8 +120,13 @@ func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
+	liste := &MyErrorListener{suppress: true}
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(liste)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
+	p.RemoveErrorListeners()
+	p.AddErrorListener(liste)
 	listener := &ChildXMLListener{
 		pomPath:         pomPath,
 		relativePomPath: relativePomPath,
@@ -176,8 +188,8 @@ func (l *ParentXMLListener) EnterElement(ctx *parser.ElementContext) {
 								OldVersion:      model.OldVersion,
 								NewVersion:      l.newVersion,
 								CompName:        l.compName,
-								PomPath:         l.pomPath,
-								relativePomPath: l.relativePomPath,
+								PomPath:         filepath.Join(strings.ReplaceAll(filepath.ToSlash(l.pomPath), l.relativePomPath, ""), m.PomPath),
+								relativePomPath: m.PomPath,
 							}
 							l.fixModelList = append(l.fixModelList, newModel)
 						}
@@ -198,8 +210,13 @@ func GetExtensionFixModelList(pomPath, relativePomPath, compName, compVersion, n
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
+	liste := &MyErrorListener{suppress: true}
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(liste)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
+	p.RemoveErrorListeners()
+	p.AddErrorListener(liste)
 	listener := &ChildXMLListener{
 		pomPath:         pomPath,
 		relativePomPath: relativePomPath,
@@ -407,8 +424,13 @@ func GetInheritFixModelList(pomPath, relativePomPath, compName, compVersion, new
 	models := make([]FixModel, 0)
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
+	liste := &MyErrorListener{suppress: true}
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(liste)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	p := parser.NewXMLParser(stream)
+	p.RemoveErrorListeners()
+	p.AddErrorListener(liste)
 	listener := &InheritParentXMLListener{
 		pomPath:         pomPath,
 		relativePomPath: relativePomPath,
@@ -438,4 +460,16 @@ func GetInheritFixModelList(pomPath, relativePomPath, compName, compVersion, new
 	}
 
 	return models
+}
+
+type MyErrorListener struct {
+	antlr.DefaultErrorListener
+	suppress bool
+}
+
+func (e *MyErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, an antlr.RecognitionException) {
+	if e.suppress {
+		// 打印详细的错误信息
+		//fmt.Printf("xxxxcccccc line %d:%d %s\n", line, column, msg)
+	}
 }
