@@ -89,7 +89,7 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 					if propertyModel, ok := l.modelMap[model.OldVersion]; ok {
 						for _, m := range propertyModel {
-							if m.OldVersion == l.compVersion {
+							if m.OldVersion == l.compVersion && m.CompName == l.compName {
 
 								newModel := FixModel{
 									Line:            m.Line,

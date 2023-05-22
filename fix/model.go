@@ -115,4 +115,5 @@ type PropertyModel struct {
 	OldVersion string
 	TagName    string
 	PomPath    string
+	CompName string
 }

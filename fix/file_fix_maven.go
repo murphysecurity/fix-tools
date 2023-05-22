@@ -155,15 +155,40 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 			return
 		}
 		properties := xmlquery.Find(doc, "//properties")
+		versions := xmlquery.Find(doc, "//version")
+
 		if len(properties) > 0 {
 			node0 := properties[0]
 			propertiesChilds := xmlquery.Find(node0, "child::*")
+		ok:
 			for _, item := range propertiesChilds {
+				compName := ""
+				for _, version := range versions {
+					if "${"+item.Data+"}" != version.InnerText() {
+						continue
+					}
+					parent := version.Parent
+					groupId := parent.SelectElement("groupId")
+					if groupId == nil {
+						break ok
+					}
+					artifactId := parent.SelectElement("artifactId")
+					if artifactId == nil {
+						break ok
+					}
+					compName = groupId.InnerText() + ":" + artifactId.InnerText()
+				}
+				if compName == "" {
+					continue
+				}
+
+				//parent := propertieComp.Parent
 				model := PropertyModel{
 					Line:       FindPropertiesLine(joinPath, item.Data, item.InnerText()),
 					OldVersion: item.InnerText(),
 					TagName:    item.Data,
 					PomPath:    pomPath,
+					CompName:   compName,
 				}
 				if models, ok := p.propertyMap[item.Data]; ok {
 					models = append(models, model)
