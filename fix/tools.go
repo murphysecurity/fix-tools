@@ -120,3 +120,12 @@ func RunGitCommand(ctx context.Context, path, name string, arg ...string) (strin
 		return string(out), nil
 	}
 }
+
+func IsInList[T int | string | int64](list []T, num T) bool {
+	for _, n := range list {
+		if n == num {
+			return true
+		}
+	}
+	return false
+}

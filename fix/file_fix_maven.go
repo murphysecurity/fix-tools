@@ -162,7 +162,7 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 			propertiesChilds := xmlquery.Find(node0, "child::*")
 		ok:
 			for _, item := range propertiesChilds {
-				compName := ""
+				compName := make([]string, 0)
 				for _, version := range versions {
 					if "${"+item.Data+"}" != version.InnerText() {
 						continue
@@ -176,9 +176,9 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 					if artifactId == nil {
 						break ok
 					}
-					compName = groupId.InnerText() + ":" + artifactId.InnerText()
+					compName = append(compName, groupId.InnerText()+":"+artifactId.InnerText())
 				}
-				if compName == "" {
+				if len(compName) == 0 {
 					continue
 				}
 
@@ -189,6 +189,7 @@ func (p *mavenParams) parsePropertyNode(params FixParams, pomPathList []string) 
 					TagName:    item.Data,
 					PomPath:    pomPath,
 					CompName:   compName,
+					//CompName: nil,
 				}
 				if models, ok := p.propertyMap[item.Data]; ok {
 					models = append(models, model)
