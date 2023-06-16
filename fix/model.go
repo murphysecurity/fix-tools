@@ -124,3 +124,11 @@ type PropertyModel struct {
 	PomPath    string
 	CompName   []string
 }
+
+type Response struct {
+	PrUrl      string         `json:"pr_url,omitempty"`
+	Preview    []Preview      `json:"preview,omitempty"`
+	DmPreview  []Preview      `json:"dm_preview,omitempty"`
+	HaveDMList map[string]int `json:"have_dm_list,omitempty"`
+	Err        error          `json:"-"`
+}

@@ -1,20 +1,19 @@
 package fix
 
-func (t *FixParams) Fix() (prUrl string, preview []Preview, dmPreview []Preview, haveDMList map[string]int, err error) {
-	err = t.check()
-	if err != nil {
+func (t *FixParams) Fix() (response Response) {
+	response.Err = t.check()
+	if response.Err != nil {
 		return
 	}
 	switch t.RepoType {
 	case "github":
-		prUrl, preview, err = t.GithubFix()
+		response.PrUrl, response.Preview, response.Err = t.GithubFix()
 	case "gitee":
-		prUrl, preview, err = t.GiteeFix()
+		response.PrUrl, response.Preview, response.Err = t.GiteeFix()
 	case "gitlab":
-		preview, err = t.GitlabFix()
+		response.Preview, response.Err = t.GitlabFix()
 	case "local":
-		preview, dmPreview, haveDMList, err = t.LocalFix()
-
+		response.Preview, response.DmPreview, response.HaveDMList, response.Err = t.LocalFix()
 	}
 	return
 }
