@@ -69,6 +69,9 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 	}
 	httpType += "://"
 	gitlabUrlEnd := strings.ReplaceAll(t.GitlabUrl, httpType, "")
+	if gitlabUrlEnd[len(gitlabUrlEnd)-1] == '/' {
+		gitlabUrlEnd = gitlabUrlEnd[0 : len(gitlabUrlEnd)-1]
+	}
 	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", httpType+"gitlab-ci-token:"+t.Token+"@"+gitlabUrlEnd+"/"+t.TargetOwner+"/"+t.Repo+".git", branch)
 	if err != nil {
 		return
