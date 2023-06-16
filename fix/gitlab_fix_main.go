@@ -61,13 +61,15 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 		return
 	}
 	//  提交文件
+	// git push https://gitlab-ci-token:<access_token>@gitlab.com/myuser/myrepo.git <branch_name>
+	//_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", "origin", branch)
 	httpType := "http"
 	if strings.Contains(t.GitlabUrl, "https") {
 		httpType += "s"
 	}
 	httpType += "://"
 	gitlabUrlEnd := strings.ReplaceAll(t.GitlabUrl, httpType, "")
-	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", httpType+"gitlab-ci-token"+t.Token+"@"+gitlabUrlEnd+"/"+t.TargetOwner+"/"+t.Repo+".git", branch)
+	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", httpType+"gitlab-ci-token:"+t.Token+"@"+gitlabUrlEnd+"/"+t.TargetOwner+"/"+t.Repo+".git", branch)
 	if err != nil {
 		return
 	}
