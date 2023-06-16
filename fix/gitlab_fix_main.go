@@ -6,6 +6,7 @@ import (
 	"github.com/xanzy/go-gitlab"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -17,7 +18,7 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), t.TimeOut)
 	defer cancel()
-	git, err := gitlab.NewClient(t.Token, gitlab.WithBaseURL(t.GitlabUrl))
+	client, err := gitlab.NewClient(t.Token, gitlab.WithBaseURL(t.GitlabUrl))
 
 	// git配置 克隆文件
 	respoName := t.UserName + "_" + strconv.FormatInt(time.Now().Unix(), 10)
@@ -60,7 +61,13 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 		return
 	}
 	//  提交文件
-	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", "origin", branch)
+	httpType := "http"
+	if strings.Contains(t.GitlabUrl, "https") {
+		httpType += "s"
+	}
+	httpType += "://"
+	gitlabUrlEnd := strings.ReplaceAll(t.GitlabUrl, httpType, "")
+	_, err = RunGitCommand(ctx, repoPath, "git", "push", "--set-upstream", httpType+"gitlab-ci-token"+t.Token+"@"+gitlabUrlEnd+"/"+t.TargetOwner+"/"+t.Repo+".git", branch)
 	if err != nil {
 		return
 	}
@@ -70,6 +77,6 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 		SourceBranch: gitlab.String(branch),
 		TargetBranch: gitlab.String(defBranch),
 	}
-	_, _, err = git.MergeRequests.CreateMergeRequest(t.TargetOwner+"/"+t.Repo, &g)
+	_, _, err = client.MergeRequests.CreateMergeRequest(t.TargetOwner+"/"+t.Repo, &g)
 	return
 }

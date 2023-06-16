@@ -8,7 +8,7 @@ require (
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/google/go-github/v47 v47.1.0
 	github.com/rs/xid v1.4.0
-	github.com/xanzy/go-gitlab v0.82.0
+	github.com/xanzy/go-gitlab v0.85.0
 	golang.org/x/oauth2 v0.6.0
 	gopkg.in/src-d/go-git.v4 v4.13.1
 )
