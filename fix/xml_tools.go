@@ -79,6 +79,7 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 			}
 			for _, context := range contexts {
 				if context.Name(0).GetText() == "dependencyManagement" {
+					l.haveDM = context.Name(0).GetSymbol().GetLine()
 					l.isDM = true
 					break
 				}
@@ -125,9 +126,6 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 									relativePomPath: m.PomPath,
 								}
 								l.fixModelList = append(l.fixModelList, newModel)
-								if l.isDM {
-									l.dmModelList = append(l.fixModelList, newModel)
-								}
 							}
 
 						}
