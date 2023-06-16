@@ -44,7 +44,7 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 	}
 
 	t.Dir = repoPath
-	preview, err = t.LocalFix()
+	preview, _, _, err = t.LocalFix()
 	if err != nil {
 		return
 	}

@@ -75,7 +75,7 @@ func (t *FixParams) GithubFix() (prUrl string, preview []Preview, err error) {
 	}
 
 	t.Dir = repoPath
-	preview, err = t.LocalFix()
+	preview, _, _, err = t.LocalFix()
 	if err != nil {
 		return
 	}

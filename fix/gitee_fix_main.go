@@ -102,7 +102,7 @@ func (t *FixParams) GiteeFix() (prUrl string, preview []Preview, err error) {
 		return
 	}
 	t.Dir = repoPath
-	preview, err = t.LocalFix()
+	preview, _, _, err = t.LocalFix()
 	if err != nil {
 		err = errors.New(" 寻找修复路径失败  " + err.Error())
 		return

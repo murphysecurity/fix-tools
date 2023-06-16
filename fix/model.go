@@ -8,11 +8,13 @@ import (
 
 type FixParams struct {
 	// 必填
-	ShowOnly       bool          // 仅展示pr预览 不进行真的pr提交
-	TimeOut        time.Duration //超时时间 单位秒 默认60秒
-	RepoType       string        // 仓库类型 github gitee gitlab local
-	CompList       []Comp
-	PackageManager string // 包管理器
+	ShowOnly             bool          // 仅展示pr预览 不进行真的pr提交
+	TimeOut              time.Duration //超时时间 单位秒 默认60秒
+	RepoType             string        // 仓库类型 github gitee gitlab local
+	CompList             []Comp
+	PackageManager       string // 包管理器
+	DmFix                bool
+	DirectDependencyList []Comp
 	// local必填
 	Dir string // 检测类型中需要指定文件夹
 
@@ -41,9 +43,11 @@ type FixParams struct {
 }
 
 type Comp struct {
-	CompName      string `json:"comp_name"`       // 组件名称
-	CompVersion   string `json:"comp_version"`    // 组件版本
-	MinFixVersion string `json:"min_fix_version"` // 最小修复版本
+	CompName      string         `json:"comp_name"`       // 组件名称
+	CompVersion   string         `json:"comp_version"`    // 组件版本
+	MinFixVersion string         `json:"min_fix_version"` // 最小修复版本
+	DmModelList   []FixModel     `json:"dm_model_list"`
+	HaveDMList    map[string]int `json:"have_dm_list"`
 }
 
 func (t *FixParams) check() error {
@@ -86,6 +90,9 @@ type mavenParams struct {
 	propertyMap  map[string][]PropertyModel
 	fixModelList []FixModel
 	preview      []Preview
+	dmModelList  []FixModel
+	haveDdMap    map[string]int
+	dmPreview    []Preview
 }
 
 type Preview struct {
@@ -115,5 +122,5 @@ type PropertyModel struct {
 	OldVersion string
 	TagName    string
 	PomPath    string
-	CompName []string
+	CompName   []string
 }

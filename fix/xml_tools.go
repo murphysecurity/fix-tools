@@ -54,11 +54,36 @@ type ChildXMLListener struct {
 	compVersion     string
 	modelMap        map[string][]PropertyModel
 	fixModelList    []FixModel
+	dmModelList     []FixModel
+	haveDM          int
+	isDM            bool
 }
 
 func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 	name := ctx.Name(0).GetText()
+
 	if name == "dependency" {
+
+		if !l.isDM {
+			contexts := make([]parser.IElementContext, 0)
+			var oldCtx antlr.Tree
+			oldCtx = ctx
+			for {
+				oldCtx = oldCtx.GetParent()
+				if oldCtx == nil {
+					break
+				}
+				if context, ok := oldCtx.(parser.IElementContext); ok {
+					contexts = append(contexts, context)
+				}
+			}
+			for _, context := range contexts {
+				if context.Name(0).GetText() == "dependencyManagement" {
+					l.isDM = true
+					break
+				}
+			}
+		}
 
 		model := FixModel{
 			PomPath:         l.pomPath,
@@ -100,14 +125,21 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 									relativePomPath: m.PomPath,
 								}
 								l.fixModelList = append(l.fixModelList, newModel)
+								if l.isDM {
+									l.dmModelList = append(l.fixModelList, newModel)
+								}
 							}
 
 						}
+
 					}
 				} else {
 					model.CompName = l.compName
 					model.NewVersion = l.newVersion
 					l.fixModelList = append(l.fixModelList, model)
+					if l.isDM {
+						l.dmModelList = append(l.fixModelList, model)
+					}
 				}
 
 			}
@@ -116,7 +148,7 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 }
 
-func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) []FixModel {
+func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) ([]FixModel, []FixModel, int) {
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
@@ -137,7 +169,7 @@ func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion
 		fixModelList:    nil,
 	}
 	antlr.ParseTreeWalkerDefault.Walk(listener, p.Document())
-	return listener.fixModelList
+	return listener.fixModelList, listener.dmModelList, listener.haveDM
 }
 
 type ParentXMLListener struct {

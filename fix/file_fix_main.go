@@ -1,11 +1,10 @@
 package fix
 
-
-func (t *FixParams) LocalFix() (preview []Preview, err error) {
+func (t *FixParams) LocalFix() (preview []Preview, dmPreview []Preview, haveDMList map[string]int, err error) {
 
 	switch t.PackageManager {
 	case "maven":
-		preview, err = t.MavenFix()
+		preview, dmPreview, haveDMList, err = t.MavenFix()
 	case "go":
 		preview, err = t.GoFix()
 	case "npm":
