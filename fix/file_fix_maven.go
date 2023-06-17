@@ -56,10 +56,11 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 	for _, item := range params.CompList {
 		if params.DmFix {
 			newParams := mavenParams{
-				propertyMap:  make(map[string][]PropertyModel, 0),
-				fixModelList: make([]FixModel, 0),
-				preview:      make([]Preview, 0),
-				haveDdMap:    make(map[string]int, 0),
+				propertyMap:      make(map[string][]PropertyModel, 0),
+				fixModelList:     make([]FixModel, 0),
+				preview:          make([]Preview, 0),
+				haveDdMap:        make(map[string]int, 0),
+				dependenciesLine: make(map[string]int, 0),
 			}
 			fixParams := params
 			fixParams.CompList = params.DirectDependencyList
