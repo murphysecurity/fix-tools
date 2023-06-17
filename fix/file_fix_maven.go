@@ -65,7 +65,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 			fixParams := params
 			fixParams.CompList = params.DirectDependencyList
 			compName := params.CompList[0].CompName
-			compVersion := params.CompList[0].CompVersion
+			compVersion := params.CompList[0].MinFixVersion
 			newParams.getFixModelList(fixParams, fixParams.pomPathList)
 			if len(newParams.dmModelList) > 0 {
 				for _, dm := range newParams.dmModelList {
@@ -74,7 +74,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 					)
 					line := 1
 					fixText := ""
-					file, err = os.Open(dm.PomPath)
+					file, err = os.Open(filepath.Join(params.Dir, dm.PomPath))
 					defer file.Close()
 					if err != nil {
 						return
@@ -96,7 +96,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 
 					if !params.ShowOnly {
 						// 打开文件并读取所有内容
-						file, err = os.Open(dm.PomPath)
+						file, err = os.Open(filepath.Join(params.Dir, dm.PomPath))
 						if err != nil {
 							panic(err)
 						}
@@ -114,7 +114,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 							newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
 						}
 
-						err = os.WriteFile(dm.PomPath, newContent, 0644)
+						err = os.WriteFile(filepath.Join(params.Dir, dm.PomPath), newContent, 0644)
 						if err != nil {
 							return
 						}
@@ -172,7 +172,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 						newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
 					}
 
-					err = os.WriteFile(pomPath, newContent, 0644)
+					err = os.WriteFile(filepath.Join(params.Dir, pomPath), newContent, 0644)
 					if err != nil {
 						return
 					}
