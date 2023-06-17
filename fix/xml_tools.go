@@ -47,44 +47,32 @@ func FindPropertiesLine(pomPath, targetElement, value string) int {
 
 type ChildXMLListener struct {
 	parser.BaseXMLParserListener
-	pomPath         string
-	relativePomPath string
-	compName        string
-	newVersion      string
-	compVersion     string
-	modelMap        map[string][]PropertyModel
-	fixModelList    []FixModel
-	dmModelList     []FixModel
-	haveDM          int
-	isDM            bool
+	pomPath          string
+	relativePomPath  string
+	compName         string
+	newVersion       string
+	compVersion      string
+	modelMap         map[string][]PropertyModel
+	fixModelList     []FixModel
+	dmModelList      []FixModel
+	haveDM           int
+	dependenciesLine int
+	isDM             bool
 }
 
 func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 	name := ctx.Name(0).GetText()
 
-	if name == "dependency" {
+	if name == "dependencyManagement" {
+		l.haveDM = ctx.Name(0).GetSymbol().GetLine()
+		l.isDM = true
+	}
 
-		if !l.isDM {
-			contexts := make([]parser.IElementContext, 0)
-			var oldCtx antlr.Tree
-			oldCtx = ctx
-			for {
-				oldCtx = oldCtx.GetParent()
-				if oldCtx == nil {
-					break
-				}
-				if context, ok := oldCtx.(parser.IElementContext); ok {
-					contexts = append(contexts, context)
-				}
-			}
-			for _, context := range contexts {
-				if context.Name(0).GetText() == "dependencyManagement" {
-					l.haveDM = context.Name(0).GetSymbol().GetLine()
-					l.isDM = true
-					break
-				}
-			}
-		}
+	if name == "dependencies" {
+		l.dependenciesLine = ctx.Name(0).GetSymbol().GetLine()
+	}
+
+	if name == "dependency" {
 
 		model := FixModel{
 			PomPath:         l.pomPath,
@@ -146,7 +134,7 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 
 }
 
-func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) ([]FixModel, []FixModel, int) {
+func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion string, model map[string][]PropertyModel) ([]FixModel, []FixModel, int, int) {
 
 	input, _ := antlr.NewFileStream(pomPath)
 	lexer := parser.NewXMLLexer(input)
@@ -167,7 +155,7 @@ func GetFixModelList(pomPath, relativePomPath, compName, compVersion, newVersion
 		fixModelList:    nil,
 	}
 	antlr.ParseTreeWalkerDefault.Walk(listener, p.Document())
-	return listener.fixModelList, listener.dmModelList, listener.haveDM
+	return listener.fixModelList, listener.dmModelList, listener.haveDM, listener.dependenciesLine
 }
 
 type ParentXMLListener struct {

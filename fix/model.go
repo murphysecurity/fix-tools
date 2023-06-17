@@ -37,9 +37,10 @@ type FixParams struct {
 	Body  string // pr 内容
 
 	// 内部使用不暴露
-	branch    string
-	defBranch string
-	delDir    string
+	branch      string
+	defBranch   string
+	delDir      string
+	pomPathList []string
 }
 
 type Comp struct {
@@ -87,12 +88,13 @@ func (t *FixParams) check() error {
 }
 
 type mavenParams struct {
-	propertyMap  map[string][]PropertyModel
-	fixModelList []FixModel
-	preview      []Preview
-	dmModelList  []FixModel
-	haveDdMap    map[string]int
-	dmPreview    []Preview
+	propertyMap      map[string][]PropertyModel
+	fixModelList     []FixModel
+	preview          []Preview
+	dmModelList      []FixModel
+	haveDdMap        map[string]int
+	dependenciesLine map[string]int
+	dmPreview        []Preview
 }
 
 type Preview struct {
