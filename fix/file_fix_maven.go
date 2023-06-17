@@ -54,19 +54,6 @@ func (t FixParams) MavenFix() (preview []Preview, dmPreview []Preview, haveDMLis
 func (p *mavenParams) modifyPom(params FixParams) (err error) {
 
 	for _, item := range params.CompList {
-		for _, model := range p.fixModelList {
-			err = fileUpdate(model, item, p, params)
-			if err != nil {
-				return
-			}
-		}
-
-		for _, model := range p.dmModelList {
-			err = dmPreview(model, p)
-			if err != nil {
-				return
-			}
-		}
 		if params.DmFix {
 			newParams := mavenParams{
 				propertyMap:  make(map[string][]PropertyModel, 0),
@@ -243,7 +230,22 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 
 			}
 
+		} else {
+			for _, model := range p.fixModelList {
+				err = fileUpdate(model, item, p, params)
+				if err != nil {
+					return
+				}
+			}
 		}
+
+		for _, model := range p.dmModelList {
+			err = dmPreview(model, p)
+			if err != nil {
+				return
+			}
+		}
+
 	}
 
 	return
