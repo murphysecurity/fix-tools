@@ -27,10 +27,11 @@ func (t FixParams) MavenFix() (preview []Preview, dmPreview []Preview, haveDMLis
 		return
 	}
 	params := mavenParams{
-		propertyMap:  make(map[string][]PropertyModel, 0),
-		fixModelList: make([]FixModel, 0),
-		preview:      make([]Preview, 0),
-		haveDdMap:    make(map[string]int, 0),
+		propertyMap:      make(map[string][]PropertyModel, 0),
+		fixModelList:     make([]FixModel, 0),
+		preview:          make([]Preview, 0),
+		haveDdMap:        make(map[string]int, 0),
+		dependenciesLine: make(map[string]int, 0),
 	}
 	params.parsePropertyNode(t, t.pomPathList)
 	params.getFixModelList(t, t.pomPathList)
