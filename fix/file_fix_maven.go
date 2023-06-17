@@ -30,7 +30,7 @@ func (t FixParams) MavenFix() (preview []Preview, dmPreview []Preview, haveDMLis
 		propertyMap:      make(map[string][]PropertyModel, 0),
 		fixModelList:     make([]FixModel, 0),
 		preview:          make([]Preview, 0),
-		haveDdMap:        make(map[string]int, 0),
+		haveDmMap:        make(map[string]int, 0),
 		dependenciesLine: make(map[string]int, 0),
 	}
 	params.parsePropertyNode(t, t.pomPathList)
@@ -47,7 +47,7 @@ func (t FixParams) MavenFix() (preview []Preview, dmPreview []Preview, haveDMLis
 	}
 	preview = params.preview
 	dmPreview = params.dmPreview
-	haveDMList = params.haveDdMap
+	haveDMList = params.haveDmMap
 	return
 }
 
@@ -59,81 +59,44 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 				propertyMap:      make(map[string][]PropertyModel, 0),
 				fixModelList:     make([]FixModel, 0),
 				preview:          make([]Preview, 0),
-				haveDdMap:        make(map[string]int, 0),
+				haveDmMap:        make(map[string]int, 0),
 				dependenciesLine: make(map[string]int, 0),
 			}
 			fixParams := params
 			fixParams.CompList = params.DirectDependencyList
+			compName := params.CompList[0].CompName
+			compVersion := params.CompList[0].CompVersion
 			newParams.getFixModelList(fixParams, fixParams.pomPathList)
-			for _, comp := range fixParams.CompList {
-				if len(comp.DmModelList) > 0 {
-					for _, dm := range comp.DmModelList {
-						var (
-							file *os.File
-						)
-						line := 1
-						fixText := ""
-						file, err = os.Open(dm.PomPath)
-						defer file.Close()
-						if err != nil {
-							return
-						}
-						scanner := bufio.NewScanner(file)
-						for scanner.Scan() {
-							text := scanner.Text()
-
-							if dm.Line == line {
-								fixText = strings.ReplaceAll(text, comp.CompVersion, comp.MinFixVersion)
-								break
-							}
-							line++
-						}
-						// 检查是否有任何错误
-						if err = scanner.Err(); err != nil {
-							return
-						}
-
-						if !params.ShowOnly {
-							// 打开文件并读取所有内容
-							file, err = os.Open(dm.PomPath)
-							if err != nil {
-								panic(err)
-							}
-							defer file.Close()
-
-							scanner := bufio.NewScanner(file)
-							var lines []string
-							for scanner.Scan() {
-								lines = append(lines, scanner.Text())
-							}
-
-							lines[dm.Line-1] = fixText
-							newContent := []byte(fmt.Sprintf("%s\n", lines[0]))
-							for _, line := range lines[1:] {
-								newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
-							}
-
-							err = os.WriteFile(dm.PomPath, newContent, 0644)
-							if err != nil {
-								return
-							}
-						}
+			if len(newParams.dmModelList) > 0 {
+				for _, dm := range newParams.dmModelList {
+					var (
+						file *os.File
+					)
+					line := 1
+					fixText := ""
+					file, err = os.Open(dm.PomPath)
+					defer file.Close()
+					if err != nil {
+						return
 					}
-					return
-				}
-			}
-			for _, comp := range fixParams.CompList {
-				if len(comp.HaveDMList) > 0 {
-					for pomPath, _ := range comp.HaveDMList {
-						var (
-							file *os.File
-						)
-						dependenciesLine, ok := newParams.dependenciesLine[pomPath]
-						if !ok {
+					scanner := bufio.NewScanner(file)
+					for scanner.Scan() {
+						text := scanner.Text()
+
+						if dm.Line == line {
+							fixText = strings.ReplaceAll(text, compVersion, compVersion)
 							break
 						}
+						line++
+					}
+					// 检查是否有任何错误
+					if err = scanner.Err(); err != nil {
+						return
+					}
+
+					if !params.ShowOnly {
 						// 打开文件并读取所有内容
-						file, err = os.Open(filepath.Join(params.Dir, pomPath))
+						file, err = os.Open(dm.PomPath)
 						if err != nil {
 							panic(err)
 						}
@@ -145,43 +108,29 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 							lines = append(lines, scanner.Text())
 						}
 
-						dependencies := lines[dependenciesLine]
-						num := len(dependencies) - len(strings.TrimLeft(dependencies, " "))
-						spaces := ""
-						for i := 0; i < num; i++ {
-							spaces += " "
-						}
-						split := strings.Split(comp.CompName, ":")
-						line1 := spaces + "    <dependency>"
-						line2 := spaces + "        <groupId>" + split[0] + "</groupId>"
-						line3 := spaces + "        <artifactId>" + split[1] + "</artifactId>"
-						line4 := spaces + "        <version>" + comp.MinFixVersion + "/version>"
-						line5 := spaces + "    </dependency>"
-						lines2 := lines[dependenciesLine+1:]
-
-						lines = append(lines[:dependenciesLine], line1, line2, line3, line4, line5)
-						lines = append(lines, lines2...)
-
+						lines[dm.Line-1] = fixText
 						newContent := []byte(fmt.Sprintf("%s\n", lines[0]))
 						for _, line := range lines[1:] {
 							newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
 						}
 
-						err = os.WriteFile(pomPath, newContent, 0644)
+						err = os.WriteFile(dm.PomPath, newContent, 0644)
 						if err != nil {
 							return
 						}
-						return
 					}
-
 				}
+				return
 			}
-			for _, comp := range fixParams.CompList {
-				for pomPath, line := range newParams.dependenciesLine {
+			if len(newParams.haveDmMap) > 0 {
+				for pomPath, _ := range newParams.haveDmMap {
 					var (
 						file *os.File
 					)
-
+					dependenciesLine, ok := newParams.dependenciesLine[pomPath]
+					if !ok {
+						break
+					}
 					// 打开文件并读取所有内容
 					file, err = os.Open(filepath.Join(params.Dir, pomPath))
 					if err != nil {
@@ -195,30 +144,31 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 						lines = append(lines, scanner.Text())
 					}
 
-					dependencies := lines[line-1]
+					dependencies := lines[dependenciesLine]
 					num := len(dependencies) - len(strings.TrimLeft(dependencies, " "))
 					spaces := ""
 					for i := 0; i < num; i++ {
 						spaces += " "
 					}
-					split := strings.Split(comp.CompName, ":")
-					line1 := spaces + "    <dependencyManagement>"
-					line2 := spaces + "        <dependencies>"
-					line3 := spaces + "            <dependency>"
-					line4 := spaces + "                <groupId>" + split[0] + "</groupId>"
-					line5 := spaces + "                <artifactId>" + split[1] + "</artifactId>"
-					line6 := spaces + "                <version>" + comp.MinFixVersion + "/version>"
-					line7 := spaces + "            </dependency>"
-					line8 := spaces + "        </dependencies>"
-					line9 := spaces + "    </dependencyManagement>"
+					split := strings.Split(compName, ":")
+					line1 := spaces + "<dependency>"
+					line2 := spaces + "    <groupId>" + split[0] + "</groupId>"
+					line3 := spaces + "    <artifactId>" + split[1] + "</artifactId>"
+					line4 := spaces + "    <version>" + compVersion + "</version>"
+					line5 := spaces + "</dependency>"
 
-					lines2 := lines[line+1:]
+					lines2 := make([]string, len(lines[dependenciesLine:]))
+					lines3 := make([]string, len(lines[:dependenciesLine]))
+					lines4 := make([]string, 0)
+					lines5 := make([]string, 0)
 
-					lines = append(lines[:line], line1, line2, line3, line4, line5, line6, line7, line8, line9)
-					lines = append(lines, lines2...)
+					copy(lines2, lines[dependenciesLine:])
+					copy(lines3, lines[:dependenciesLine])
+					lines4 = append(lines3, line1, line2, line3, line4, line5)
+					lines5 = append(lines4, lines2...)
 
-					newContent := []byte(fmt.Sprintf("%s\n", lines[0]))
-					for _, line := range lines[1:] {
+					newContent := []byte(fmt.Sprintf("%s\n", lines5[0]))
+					for _, line := range lines5[1:] {
 						newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
 					}
 
@@ -229,6 +179,62 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 					return
 				}
 
+			}
+			for pomPath, line := range newParams.dependenciesLine {
+				var (
+					file *os.File
+				)
+
+				// 打开文件并读取所有内容
+				file, err = os.Open(filepath.Join(params.Dir, pomPath))
+				if err != nil {
+					panic(err)
+				}
+				defer file.Close()
+
+				scanner := bufio.NewScanner(file)
+				var lines []string
+				for scanner.Scan() {
+					lines = append(lines, scanner.Text())
+				}
+
+				dependencies := lines[line-1]
+				num := len(dependencies) - len(strings.TrimLeft(dependencies, " "))
+				spaces := ""
+				for i := 0; i < num; i++ {
+					spaces += " "
+				}
+				split := strings.Split(compName, ":")
+				line1 := spaces + "    <dependencyManagement>"
+				line2 := spaces + "        <dependencies>"
+				line3 := spaces + "            <dependency>"
+				line4 := spaces + "                <groupId>" + split[0] + "</groupId>"
+				line5 := spaces + "                <artifactId>" + split[1] + "</artifactId>"
+				line6 := spaces + "                <version>" + compVersion + "</version>"
+				line7 := spaces + "            </dependency>"
+				line8 := spaces + "        </dependencies>"
+				line9 := spaces + "    </dependencyManagement>"
+
+				lines2 := make([]string, len(lines[line-1:]))
+				lines3 := make([]string, len(lines[:line]))
+				lines4 := make([]string, 0)
+				lines5 := make([]string, 0)
+
+				copy(lines2, lines[line:])
+				copy(lines3, lines[:line])
+				lines4 = append(lines3, line1, line2, line3, line4, line5, line6, line7, line8, line9)
+				lines5 = append(lines4, lines2...)
+
+				newContent := []byte(fmt.Sprintf("%s\n", lines5[0]))
+				for _, line := range lines5[1:] {
+					newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
+				}
+
+				err = os.WriteFile(pomPath, newContent, 0644)
+				if err != nil {
+					return
+				}
+				return
 			}
 
 		} else {
@@ -523,9 +529,9 @@ func (p *mavenParams) getFixModelList(params FixParams, pomPathList []string) {
 				p.dmModelList = append(p.dmModelList, list2...)
 			}
 			if haveDM > 0 {
-				p.haveDdMap[pomPath] = haveDM
+				p.haveDmMap[pomPath] = haveDM
 			}
-			if haveDM > 0 {
+			if dependenciesLine > 0 {
 				p.dependenciesLine[pomPath] = dependenciesLine
 			}
 

@@ -92,7 +92,7 @@ type mavenParams struct {
 	fixModelList     []FixModel
 	preview          []Preview
 	dmModelList      []FixModel
-	haveDdMap        map[string]int
+	haveDmMap        map[string]int
 	dependenciesLine map[string]int
 	dmPreview        []Preview
 }
