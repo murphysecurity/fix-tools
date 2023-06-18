@@ -10,10 +10,11 @@ import (
 	"time"
 )
 
-func (t *FixParams) GitlabFix() (preview []Preview, err error) {
+func (t *FixParams) GitlabFix() (PrUrl string, preview []Preview, err error) {
 	var (
-		branch    = "fix_" + xid.New().String()
-		defBranch string
+		branch       = "fix_" + xid.New().String()
+		defBranch    string
+		mergeRequest *gitlab.MergeRequest
 	)
 
 	ctx, cancel := context.WithTimeout(context.Background(), t.TimeOut)
@@ -82,6 +83,7 @@ func (t *FixParams) GitlabFix() (preview []Preview, err error) {
 		SourceBranch: gitlab.String(branch),
 		TargetBranch: gitlab.String(defBranch),
 	}
-	_, _, err = client.MergeRequests.CreateMergeRequest(t.TargetOwner+"/"+t.Repo, &g)
+	mergeRequest, _, err = client.MergeRequests.CreateMergeRequest(t.TargetOwner+"/"+t.Repo, &g)
+	PrUrl = mergeRequest.WebURL
 	return
 }

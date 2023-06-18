@@ -11,7 +11,7 @@ func (t *FixParams) Fix() (response Response) {
 	case "gitee":
 		response.PrUrl, response.Preview, response.Err = t.GiteeFix()
 	case "gitlab":
-		response.Preview, response.Err = t.GitlabFix()
+		response.PrUrl,response.Preview, response.Err = t.GitlabFix()
 	case "local":
 		response.Preview, response.DmPreview, response.HaveDMList, response.Err = t.LocalFix()
 	}
