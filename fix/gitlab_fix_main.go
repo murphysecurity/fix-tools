@@ -29,7 +29,7 @@ func (t *FixParams) GitlabFix() (PrUrl string, preview []Preview, err error) {
 		DelDir(repoPath)
 	}()
 
-	defBranch, err = GitConfig(ctx, "./", repoPath, branch, t.GitlabUrl+"/"+t.TargetOwner+"/"+t.Repo+".git", t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
+	defBranch, err = GitConfig(ctx, "./", repoPath, branch, t.GitlabUrl+"/"+t.TargetOwner+"/"+t.Repo+".git", t.CommitHash, t.ProxyUrl, t.UserName, t.Password, t.Token)
 	if err != nil {
 		return
 	}

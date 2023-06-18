@@ -84,7 +84,7 @@ func (t *FixParams) GiteeFix() (prUrl string, preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	_, err = GitConfig(ctx, "./", repoPath, t.branch, htmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
+	_, err = GitConfig(ctx, "./", repoPath, t.branch, htmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password,t.Token)
 	if err != nil {
 		err = errors.New(" 克隆文件失败  " + err.Error())
 		return

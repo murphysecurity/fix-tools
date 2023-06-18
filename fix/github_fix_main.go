@@ -59,7 +59,7 @@ func (t *FixParams) GithubFix() (prUrl string, preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	_, err = GitConfig(ctx, path, repoPath, branch, gitRemote, t.CommitHash, t.ProxyUrl, t.UserName, t.Password)
+	_, err = GitConfig(ctx, path, repoPath, branch, gitRemote, t.CommitHash, t.ProxyUrl, t.UserName, t.Password, t.Token)
 	if err != nil {
 		return
 	}

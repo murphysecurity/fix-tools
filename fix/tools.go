@@ -26,10 +26,18 @@ func Exists(path string) bool {
 }
 
 // 设置git配置
-func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHash, proxyUrl, username, password string) (string, error) {
+func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHash, proxyUrl, username, password, token string) (string, error) {
 	var (
 		err error
 	)
+	if len(token) != 0 && !strings.Contains(gitRemote, "gitee") && !strings.Contains(gitRemote, "github") {
+		index := strings.Index(gitRemote, "://")
+		i := index + 3
+		username = strings.ReplaceAll(username, "@", "%40")
+		password = strings.ReplaceAll(password, "@", "%40")
+		gitRemote = gitRemote[0:i] + "oauth2:" + password + "@" + gitRemote[i:]
+	}
+
 	if len(username) != 0 && len(password) != 0 {
 		index := strings.Index(gitRemote, "://")
 		i := index + 3
