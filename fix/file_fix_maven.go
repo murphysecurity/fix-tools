@@ -230,7 +230,7 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 					newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
 				}
 
-				err = os.WriteFile(pomPath, newContent, 0644)
+				err = os.WriteFile(filepath.Join(params.Dir, pomPath), newContent, 0644)
 				if err != nil {
 					return
 				}
