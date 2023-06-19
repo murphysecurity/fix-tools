@@ -35,7 +35,7 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 		i := index + 3
 		username = strings.ReplaceAll(username, "@", "%40")
 		password = strings.ReplaceAll(password, "@", "%40")
-		gitRemote = gitRemote[0:i] + "oauth2:" + password + "@" + gitRemote[i:]
+		gitRemote = gitRemote[0:i] + "oauth2:" + token + "@" + gitRemote[i:]
 	}
 
 	if len(username) != 0 && len(password) != 0 {
