@@ -108,6 +108,34 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 	return defBranch, nil
 }
 
+// 检测分支是否存在
+func CheckBranchExist(ctx context.Context, repoPath, branch string) (bool, error) {
+
+	cmd := exec.CommandContext(ctx, "git", "branch", "-a", "|", "grep", "remotes/origin/"+branch)
+	cmd.Dir = repoPath
+	out, err := cmd.Output()
+
+	if err != nil {
+		if exitError, ok := err.(*exec.ExitError); ok {
+			newErr := errors.New(string(out) + " 获取检测分支 失败   ==  " + exitError.Error() + string(exitError.Stderr) + " repoPath--" + repoPath)
+			return false, newErr
+		}
+
+		err = errors.New(" 获取检测分支 失败  " + string(out) + err.Error() + " repoPath--" + repoPath)
+		return false, err
+	}
+
+	if len(string(out)) == 0 {
+		return false, errors.New("无法获得检测分支")
+	}
+	if strings.ReplaceAll(string(out), "remotes/origin/", "") != branch {
+		return false, errors.New("无法获得检测分支")
+
+	}
+
+	return true, nil
+}
+
 // 执行任意cmd命令的封装
 func RunGitCommand(ctx context.Context, path, name string, arg ...string) (string, error) {
 	cmd := exec.CommandContext(ctx, name, arg...)

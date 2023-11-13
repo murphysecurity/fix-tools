@@ -25,6 +25,7 @@ type FixParams struct {
 	TargetOwner string // 目标 仓库拥有者
 	Owner       string //   当前用户 仓库拥有者
 	Repo        string //   仓库路径 不变
+	Branch      string //   提交的hash对应的分支
 
 	// 仓库类型 用户相关
 	UserName  string //   设置git用户名

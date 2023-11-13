@@ -33,7 +33,14 @@ func (t *FixParams) GitlabFix() (PrUrl string, preview []Preview, err error) {
 	if err != nil {
 		return
 	}
-
+	exist, existErr := CheckBranchExist(ctx, repoPath, t.Branch)
+	if existErr != nil && existErr.Error() != "无法获得检测分支" {
+		err = existErr
+		return
+	}
+	if exist {
+		defBranch = t.Branch
+	}
 	// 设置git邮箱和用户名
 	_, err = RunGitCommand(ctx, repoPath, "git", "config", "user.email", t.UserEmail)
 	if err != nil {
