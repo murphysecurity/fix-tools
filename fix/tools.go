@@ -111,7 +111,7 @@ func GitConfig(ctx context.Context, path, repoPath, branch, gitRemote, commitHas
 // 检测分支是否存在
 func CheckBranchExist(ctx context.Context, repoPath, branch string) (bool, error) {
 
-	cmd := exec.CommandContext(ctx, "git", "branch", "-a", "|", "grep", "remotes/origin/"+branch)
+	cmd := exec.CommandContext(ctx, "git", "show-branch", "origin/"+branch)
 	cmd.Dir = repoPath
 	out, err := cmd.Output()
 
@@ -128,7 +128,7 @@ func CheckBranchExist(ctx context.Context, repoPath, branch string) (bool, error
 	if len(string(out)) == 0 {
 		return false, errors.New("无法获得检测分支")
 	}
-	if strings.ReplaceAll(string(out), "remotes/origin/", "") != branch {
+	if strings.Contains(string(out), "fatal: bad sha1 reference") {
 		return false, errors.New("无法获得检测分支")
 
 	}
