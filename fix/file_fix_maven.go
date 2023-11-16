@@ -122,64 +122,64 @@ func (p *mavenParams) modifyPom(params FixParams) (err error) {
 				}
 				return
 			}
-			//if len(newParams.haveDmMap) > 0 {
-			//	for pomPath, _ := range newParams.haveDmMap {
-			//		var (
-			//			file *os.File
-			//		)
-			//		dependenciesLine, ok := newParams.dependenciesLine[pomPath]
-			//		if !ok {
-			//			break
-			//		}
-			//		// 打开文件并读取所有内容
-			//		file, err = os.Open(filepath.Join(params.Dir, pomPath))
-			//		if err != nil {
-			//			panic(err)
-			//		}
-			//		defer file.Close()
-			//
-			//		scanner := bufio.NewScanner(file)
-			//		var lines []string
-			//		for scanner.Scan() {
-			//			lines = append(lines, scanner.Text())
-			//		}
-			//
-			//		dependencies := lines[dependenciesLine]
-			//		num := len(dependencies) - len(strings.TrimLeft(dependencies, " "))
-			//		spaces := ""
-			//		for i := 0; i < num; i++ {
-			//			spaces += " "
-			//		}
-			//		split := strings.Split(compName, ":")
-			//		line1 := spaces + "<dependency>"
-			//		line2 := spaces + "    <groupId>" + split[0] + "</groupId>"
-			//		line3 := spaces + "    <artifactId>" + split[1] + "</artifactId>"
-			//		line4 := spaces + "    <version>" + compVersion + "</version>"
-			//		line5 := spaces + "</dependency>"
-			//
-			//		lines2 := make([]string, len(lines[dependenciesLine:]))
-			//		lines3 := make([]string, len(lines[:dependenciesLine]))
-			//		lines4 := make([]string, 0)
-			//		lines5 := make([]string, 0)
-			//
-			//		copy(lines2, lines[dependenciesLine:])
-			//		copy(lines3, lines[:dependenciesLine])
-			//		lines4 = append(lines3, line1, line2, line3, line4, line5)
-			//		lines5 = append(lines4, lines2...)
-			//
-			//		newContent := []byte(fmt.Sprintf("%s\n", lines5[0]))
-			//		for _, line := range lines5[1:] {
-			//			newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
-			//		}
-			//
-			//		err = os.WriteFile(filepath.Join(params.Dir, pomPath), newContent, 0644)
-			//		if err != nil {
-			//			return
-			//		}
-			//		return
-			//	}
-			//
-			//}
+			if len(newParams.haveDmMap) > 0 {
+				for pomPath, _ := range newParams.haveDmMap {
+					var (
+						file *os.File
+					)
+					dependenciesLine, ok := newParams.dependenciesLine[pomPath]
+					if !ok {
+						break
+					}
+					// 打开文件并读取所有内容
+					file, err = os.Open(filepath.Join(params.Dir, pomPath))
+					if err != nil {
+						panic(err)
+					}
+					defer file.Close()
+
+					scanner := bufio.NewScanner(file)
+					var lines []string
+					for scanner.Scan() {
+						lines = append(lines, scanner.Text())
+					}
+
+					dependencies := lines[dependenciesLine]
+					num := len(dependencies) - len(strings.TrimLeft(dependencies, " "))
+					spaces := ""
+					for i := 0; i < num; i++ {
+						spaces += " "
+					}
+					split := strings.Split(compName, ":")
+					line1 := spaces + "<dependency>"
+					line2 := spaces + "    <groupId>" + split[0] + "</groupId>"
+					line3 := spaces + "    <artifactId>" + split[1] + "</artifactId>"
+					line4 := spaces + "    <version>" + compVersion + "</version>"
+					line5 := spaces + "</dependency>"
+
+					lines2 := make([]string, len(lines[dependenciesLine:]))
+					lines3 := make([]string, len(lines[:dependenciesLine]))
+					lines4 := make([]string, 0)
+					lines5 := make([]string, 0)
+
+					copy(lines2, lines[dependenciesLine:])
+					copy(lines3, lines[:dependenciesLine])
+					lines4 = append(lines3, line1, line2, line3, line4, line5)
+					lines5 = append(lines4, lines2...)
+
+					newContent := []byte(fmt.Sprintf("%s\n", lines5[0]))
+					for _, line := range lines5[1:] {
+						newContent = append(newContent, []byte(fmt.Sprintf("%s\n", line))...)
+					}
+
+					err = os.WriteFile(filepath.Join(params.Dir, pomPath), newContent, 0644)
+					if err != nil {
+						return
+					}
+					return
+				}
+
+			}
 			for pomPath, line := range newParams.dependenciesLine {
 				var (
 					file *os.File
