@@ -82,7 +82,11 @@ func (l *ChildXMLListener) EnterElement(ctx *parser.ElementContext) {
 			elements := ctx.Content().AllElement()
 			for _, element := range elements {
 				text := element.Name(0).GetText()
-				value := element.Content().GetText()
+				content := element.Content()
+				if content == nil {
+					continue
+				}
+				value := content.GetText()
 				if text == "groupId" {
 					model.GroupId = value
 				}
