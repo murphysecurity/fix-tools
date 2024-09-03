@@ -1,0 +1,264 @@
+[
+  {
+    "path": "ipaddress",
+    "line": 7,
+    "content": [
+      {
+        "line": 2,
+        "text": "six>=1.9.0  # MIT"
+      },
+      {
+        "line": 3,
+        "text": "python-dateutil>=2.5.3  # BSD"
+      },
+      {
+        "line": 4,
+        "text": "setuptools>=21.0.0  # PSF/ZPL"
+      },
+      {
+        "line": 5,
+        "text": "pyyaml>=5.4.1  # MIT"
+      },
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      },
+      {
+        "line": 7,
+        "text": "ipaddress>=1.0.17;python_version==\"2.7\"  # PSF"
+      },
+      {
+        "line": 8,
+        "text": "websocket-client>=0.32.0,!=0.40.0,!=0.41.*,!=0.42.* # LGPLv2+"
+      },
+      {
+        "line": 9,
+        "text": "requests # Apache-2.0"
+      },
+      {
+        "line": 10,
+        "text": "requests-oauthlib # ISC"
+      },
+      {
+        "line": 11,
+        "text": "urllib3>=1.24.2  # MIT"
+      }
+    ]
+  },
+  {
+    "path": "six",
+    "line": 2,
+    "content": [
+      {
+        "line": 1,
+        "text": "certifi>=14.05.14 # MPL"
+      },
+      {
+        "line": 2,
+        "text": "six>=1.9.0  # MIT"
+      },
+      {
+        "line": 3,
+        "text": "python-dateutil>=2.5.3  # BSD"
+      },
+      {
+        "line": 4,
+        "text": "setuptools>=21.0.0  # PSF/ZPL"
+      },
+      {
+        "line": 5,
+        "text": "pyyaml>=5.4.1  # MIT"
+      },
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      },
+      {
+        "line": 7,
+        "text": "ipaddress>=1.0.17;python_version==\"2.7\"  # PSF"
+      }
+    ]
+  },
+  {
+    "path": "certifi",
+    "line": 1,
+    "content": [
+      {
+        "line": 1,
+        "text": "certifi>=14.05.14 # MPL"
+      },
+      {
+        "line": 2,
+        "text": "six>=1.9.0  # MIT"
+      },
+      {
+        "line": 3,
+        "text": "python-dateutil>=2.5.3  # BSD"
+      },
+      {
+        "line": 4,
+        "text": "setuptools>=21.0.0  # PSF/ZPL"
+      },
+      {
+        "line": 5,
+        "text": "pyyaml>=5.4.1  # MIT"
+      },
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      }
+    ]
+  },
+  {
+    "path": "requests-oauthlib",
+    "line": 10,
+    "content": [
+      {
+        "line": 5,
+        "text": "pyyaml>=5.4.1  # MIT"
+      },
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      },
+      {
+        "line": 7,
+        "text": "ipaddress>=1.0.17;python_version==\"2.7\"  # PSF"
+      },
+      {
+        "line": 8,
+        "text": "websocket-client>=0.32.0,!=0.40.0,!=0.41.*,!=0.42.* # LGPLv2+"
+      },
+      {
+        "line": 9,
+        "text": "requests # Apache-2.0"
+      },
+      {
+        "line": 10,
+        "text": "requests-oauthlib # ISC"
+      },
+      {
+        "line": 11,
+        "text": "urllib3>=1.24.2  # MIT"
+      }
+    ]
+  },
+  {
+    "path": "urllib3",
+    "line": 11,
+    "content": [
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      },
+      {
+        "line": 7,
+        "text": "ipaddress>=1.0.17;python_version==\"2.7\"  # PSF"
+      },
+      {
+        "line": 8,
+        "text": "websocket-client>=0.32.0,!=0.40.0,!=0.41.*,!=0.42.* # LGPLv2+"
+      },
+      {
+        "line": 9,
+        "text": "requests # Apache-2.0"
+      },
+      {
+        "line": 10,
+        "text": "requests-oauthlib # ISC"
+      },
+      {
+        "line": 11,
+        "text": "urllib3>=1.24.2  # MIT"
+      }
+    ]
+  },
+  {
+    "path": "setuptools",
+    "line": 4,
+    "content": [
+      {
+        "line": 1,
+        "text": "certifi>=14.05.14 # MPL"
+      },
+      {
+        "line": 2,
+        "text": "six>=1.9.0  # MIT"
+      },
+      {
+        "line": 3,
+        "text": "python-dateutil>=2.5.3  # BSD"
+      },
+      {
+        "line": 4,
+        "text": "setuptools>=21.0.0  # PSF/ZPL"
+      },
+      {
+        "line": 5,
+        "text": "pyyaml>=5.4.1  # MIT"
+      },
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      },
+      {
+        "line": 7,
+        "text": "ipaddress>=1.0.17;python_version==\"2.7\"  # PSF"
+      },
+      {
+        "line": 8,
+        "text": "websocket-client>=0.32.0,!=0.40.0,!=0.41.*,!=0.42.* # LGPLv2+"
+      },
+      {
+        "line": 9,
+        "text": "requests # Apache-2.0"
+      }
+    ]
+  },
+  {
+    "path": "pyyaml",
+    "line": 5,
+    "content": [
+      {
+        "line": 1,
+        "text": "certifi>=14.05.14 # MPL"
+      },
+      {
+        "line": 2,
+        "text": "six>=1.9.0  # MIT"
+      },
+      {
+        "line": 3,
+        "text": "python-dateutil>=2.5.3  # BSD"
+      },
+      {
+        "line": 4,
+        "text": "setuptools>=21.0.0  # PSF/ZPL"
+      },
+      {
+        "line": 5,
+        "text": "pyyaml>=5.4.1  # MIT"
+      },
+      {
+        "line": 6,
+        "text": "google-auth>=1.0.1  # Apache-2.0"
+      },
+      {
+        "line": 7,
+        "text": "ipaddress>=1.0.17;python_version==\"2.7\"  # PSF"
+      },
+      {
+        "line": 8,
+        "text": "websocket-client>=0.32.0,!=0.40.0,!=0.41.*,!=0.42.* # LGPLv2+"
+      },
+      {
+        "line": 9,
+        "text": "requests # Apache-2.0"
+      },
+      {
+        "line": 10,
+        "text": "requests-oauthlib # ISC"
+      }
+    ]
+  }
+]

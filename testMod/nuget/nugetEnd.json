@@ -1,0 +1,740 @@
+[
+  {
+    "path": "NeoLua",
+    "line": 82,
+    "content": [
+      {
+        "line": 77,
+        "text": "    \u003cEmbeddedResource Include=\"LuaResources\\aslib.lua\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cEmbeddedResource Include=\"LuaResources\\stream_ops.lua\" /\u003e"
+      },
+      {
+        "line": 79,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 80,
+        "text": ""
+      },
+      {
+        "line": 81,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 82,
+        "text": "    \u003cPackageReference Include=\"NeoLua\" Version=\"1.3.14\" /\u003e"
+      },
+      {
+        "line": 83,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 84,
+        "text": ""
+      },
+      {
+        "line": 85,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 86,
+        "text": "    \u003cAssemblyAttribute Include=\"System.Runtime.CompilerServices.InternalsVisibleTo\"\u003e"
+      },
+      {
+        "line": 87,
+        "text": "      \u003c_Parameter1\u003eAerospikeClientProxy\u003c/_Parameter1\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.CSharp",
+    "line": 106,
+    "content": [
+      {
+        "line": 101,
+        "text": "      \u003cProductName\u003eWindows Installer 3.1\u003c/ProductName\u003e"
+      },
+      {
+        "line": 102,
+        "text": "      \u003cInstall\u003etrue\u003c/Install\u003e"
+      },
+      {
+        "line": 103,
+        "text": "    \u003c/BootstrapperPackage\u003e"
+      },
+      {
+        "line": 104,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 105,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 106,
+        "text": "    \u003cPackageReference Include=\"Microsoft.CSharp\" Version=\"4.7.0\" /\u003e"
+      },
+      {
+        "line": 107,
+        "text": "    \u003cPackageReference Include=\"Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers\" Version=\"0.4.355802\"\u003e"
+      },
+      {
+        "line": 108,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 109,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 110,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Windows.Compatibility\" Version=\"7.0.3\" /\u003e"
+      },
+      {
+        "line": 111,
+        "text": "  \u003c/ItemGroup\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.CSharp",
+    "line": 106,
+    "content": [
+      {
+        "line": 101,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 102,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 103,
+        "text": "    \u003cProjectReference Include=\"..\\AerospikeClient\\AerospikeClient.csproj\" /\u003e"
+      },
+      {
+        "line": 104,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 105,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 106,
+        "text": "    \u003cPackageReference Include=\"Microsoft.CSharp\" Version=\"4.7.0\" /\u003e"
+      },
+      {
+        "line": 107,
+        "text": "    \u003cPackageReference Include=\"Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers\" Version=\"0.4.355802\"\u003e"
+      },
+      {
+        "line": 108,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 109,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 110,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Windows.Compatibility\" Version=\"7.0.3\" /\u003e"
+      },
+      {
+        "line": 111,
+        "text": "  \u003c/ItemGroup\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.Windows.Compatibility",
+    "line": 110,
+    "content": [
+      {
+        "line": 105,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 106,
+        "text": "    \u003cPackageReference Include=\"Microsoft.CSharp\" Version=\"4.7.0\" /\u003e"
+      },
+      {
+        "line": 107,
+        "text": "    \u003cPackageReference Include=\"Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers\" Version=\"0.4.355802\"\u003e"
+      },
+      {
+        "line": 108,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 109,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 110,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Windows.Compatibility\" Version=\"7.0.3\" /\u003e"
+      },
+      {
+        "line": 111,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 112,
+        "text": "\u003c/Project\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.Windows.Compatibility",
+    "line": 110,
+    "content": [
+      {
+        "line": 105,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 106,
+        "text": "    \u003cPackageReference Include=\"Microsoft.CSharp\" Version=\"4.7.0\" /\u003e"
+      },
+      {
+        "line": 107,
+        "text": "    \u003cPackageReference Include=\"Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers\" Version=\"0.4.355802\"\u003e"
+      },
+      {
+        "line": 108,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 109,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 110,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Windows.Compatibility\" Version=\"7.0.3\" /\u003e"
+      },
+      {
+        "line": 111,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 112,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 113,
+        "text": "    \u003cCompile Update=\"Properties\\Settings.Designer.cs\"\u003e"
+      },
+      {
+        "line": 114,
+        "text": "      \u003cDesignTimeSharedInput\u003eTrue\u003c/DesignTimeSharedInput\u003e"
+      },
+      {
+        "line": 115,
+        "text": "      \u003cAutoGen\u003eTrue\u003c/AutoGen\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Google.Protobuf",
+    "line": 75,
+    "content": [
+      {
+        "line": 70,
+        "text": "      \u003cPackagePath\u003e\\\u003c/PackagePath\u003e"
+      },
+      {
+        "line": 71,
+        "text": "    \u003c/None\u003e"
+      },
+      {
+        "line": 72,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 73,
+        "text": ""
+      },
+      {
+        "line": 74,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Google.Protobuf\" Version=\"3.25.1\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Grpc.AspNetCore\" Version=\"2.59.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Grpc.Net.Client\" Version=\"2.59.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"Grpc.Tools\" Version=\"2.59.0\"\u003e"
+      },
+      {
+        "line": 79,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 80,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.Extensions.Configuration",
+    "line": 75,
+    "content": [
+      {
+        "line": 70,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 71,
+        "text": "    \u003cPackageReference Include=\"coverlet.msbuild\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 72,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 73,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 74,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration.Json\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"17.9.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestAdapter\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 79,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestFramework\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 80,
+        "text": "    \u003cPackageReference Include=\"coverlet.collector\" Version=\"6.0.1\"\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.NET.Test.Sdk",
+    "line": 77,
+    "content": [
+      {
+        "line": 72,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 73,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 74,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration.Json\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"17.9.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestAdapter\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 79,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestFramework\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 80,
+        "text": "    \u003cPackageReference Include=\"coverlet.collector\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 81,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 82,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Grpc.Net.Client",
+    "line": 77,
+    "content": [
+      {
+        "line": 72,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 73,
+        "text": ""
+      },
+      {
+        "line": 74,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Google.Protobuf\" Version=\"3.25.1\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Grpc.AspNetCore\" Version=\"2.59.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Grpc.Net.Client\" Version=\"2.59.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"Grpc.Tools\" Version=\"2.59.0\"\u003e"
+      },
+      {
+        "line": 79,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 80,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 81,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 82,
+        "text": "  \u003c/ItemGroup\u003e"
+      }
+    ]
+  },
+  {
+    "path": "MSTest.TestAdapter",
+    "line": 78,
+    "content": [
+      {
+        "line": 73,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 74,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration.Json\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"17.9.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestAdapter\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 79,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestFramework\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 80,
+        "text": "    \u003cPackageReference Include=\"coverlet.collector\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 81,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 82,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 83,
+        "text": "    \u003c/PackageReference\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Grpc.AspNetCore",
+    "line": 76,
+    "content": [
+      {
+        "line": 71,
+        "text": "    \u003c/None\u003e"
+      },
+      {
+        "line": 72,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 73,
+        "text": ""
+      },
+      {
+        "line": 74,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Google.Protobuf\" Version=\"3.25.1\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Grpc.AspNetCore\" Version=\"2.59.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Grpc.Net.Client\" Version=\"2.59.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"Grpc.Tools\" Version=\"2.59.0\"\u003e"
+      },
+      {
+        "line": 79,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 80,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 81,
+        "text": "    \u003c/PackageReference\u003e"
+      }
+    ]
+  },
+  {
+    "path": "MSTest.TestFramework",
+    "line": 79,
+    "content": [
+      {
+        "line": 74,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration.Json\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"17.9.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestAdapter\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 79,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestFramework\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 80,
+        "text": "    \u003cPackageReference Include=\"coverlet.collector\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 81,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 82,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 83,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 84,
+        "text": "    \u003cPackageReference Include=\"System.Configuration.ConfigurationManager\" Version=\"8.0.0\" /\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.Extensions.Configuration.Json",
+    "line": 76,
+    "content": [
+      {
+        "line": 71,
+        "text": "    \u003cPackageReference Include=\"coverlet.msbuild\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 72,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 73,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 74,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 75,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 76,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration.Json\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 77,
+        "text": "    \u003cPackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"17.9.0\" /\u003e"
+      },
+      {
+        "line": 78,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestAdapter\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 79,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestFramework\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 80,
+        "text": "    \u003cPackageReference Include=\"coverlet.collector\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 81,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      }
+    ]
+  },
+  {
+    "path": "System.Configuration.ConfigurationManager",
+    "line": 84,
+    "content": [
+      {
+        "line": 79,
+        "text": "    \u003cPackageReference Include=\"MSTest.TestFramework\" Version=\"3.2.2\" /\u003e"
+      },
+      {
+        "line": 80,
+        "text": "    \u003cPackageReference Include=\"coverlet.collector\" Version=\"6.0.1\"\u003e"
+      },
+      {
+        "line": 81,
+        "text": "      \u003cPrivateAssets\u003eall\u003c/PrivateAssets\u003e"
+      },
+      {
+        "line": 82,
+        "text": "      \u003cIncludeAssets\u003eruntime; build; native; contentfiles; analyzers; buildtransitive\u003c/IncludeAssets\u003e"
+      },
+      {
+        "line": 83,
+        "text": "    \u003c/PackageReference\u003e"
+      },
+      {
+        "line": 84,
+        "text": "    \u003cPackageReference Include=\"System.Configuration.ConfigurationManager\" Version=\"8.0.0\" /\u003e"
+      },
+      {
+        "line": 85,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 86,
+        "text": ""
+      },
+      {
+        "line": 87,
+        "text": "  \u003cPropertyGroup\u003e"
+      },
+      {
+        "line": 88,
+        "text": "    \u003cCollectCoverage\u003etrue\u003c/CollectCoverage\u003e"
+      },
+      {
+        "line": 89,
+        "text": "    \u003cCoverletOutputFormat\u003elcov\u003c/CoverletOutputFormat\u003e"
+      }
+    ]
+  },
+  {
+    "path": "Microsoft.Extensions.Configuration.Json",
+    "line": 23,
+    "content": [
+      {
+        "line": 18,
+        "text": "  \u003cPropertyGroup Condition=\" '$(Configuration)' == 'Release_Unix' \"\u003e"
+      },
+      {
+        "line": 19,
+        "text": "    \u003cOptimize Condition=\" '$(Optimize)' == '' \"\u003etrue\u003c/Optimize\u003e"
+      },
+      {
+        "line": 20,
+        "text": "  \u003c/PropertyGroup\u003e"
+      },
+      {
+        "line": 21,
+        "text": ""
+      },
+      {
+        "line": 22,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 23,
+        "text": "    \u003cPackageReference Include=\"Microsoft.Extensions.Configuration.Json\" Version=\"7.0.0\" /\u003e"
+      },
+      {
+        "line": 24,
+        "text": "  \u003c/ItemGroup\u003e"
+      },
+      {
+        "line": 25,
+        "text": ""
+      },
+      {
+        "line": 26,
+        "text": "  \u003cItemGroup\u003e"
+      },
+      {
+        "line": 27,
+        "text": "    \u003cNone Update=\"settings.json\"\u003e"
+      },
+      {
+        "line": 28,
+        "text": "      \u003cCopyToOutputDirectory\u003ePreserveNewest\u003c/CopyToOutputDirectory\u003e"
+      }
+    ]
+  }
+]

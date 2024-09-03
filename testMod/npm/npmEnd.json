@@ -1,0 +1,52 @@
+[
+  {
+    "path": "axios",
+    "line": 23,
+    "content": [
+      {
+        "line": 18,
+        "text": "    \"position\": \"center\","
+      },
+      {
+        "line": 19,
+        "text": "    \"always-on-top\": true,"
+      },
+      {
+        "line": 20,
+        "text": "    \"icon\": \"assets/pgAdmin4.png\""
+      },
+      {
+        "line": 21,
+        "text": "  },"
+      },
+      {
+        "line": 22,
+        "text": "  \"dependencies\": {"
+      },
+      {
+        "line": 23,
+        "text": "    \"axios\": \"0.21.4\","
+      },
+      {
+        "line": 24,
+        "text": "    \"bootstrap\": \"^4.6.2\""
+      },
+      {
+        "line": 25,
+        "text": "  },"
+      },
+      {
+        "line": 26,
+        "text": "  \"devDependencies\": {"
+      },
+      {
+        "line": 27,
+        "text": "    \"eslint\": \"^6.3.0\","
+      },
+      {
+        "line": 28,
+        "text": "    \"nw\": \"^0.70.0\""
+      }
+    ]
+  }
+]

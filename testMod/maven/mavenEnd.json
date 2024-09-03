@@ -1,0 +1,202 @@
+[
+  {
+    "path": "org.springframework.boot:spring-boot-autoconfigure",
+    "line": 38,
+    "content": [
+      {
+        "line": 35,
+        "text": "        \u003cdependency\u003e"
+      },
+      {
+        "line": 36,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 37,
+        "text": "            \u003cartifactId\u003espring-boot-autoconfigure\u003c/artifactId\u003e"
+      },
+      {
+        "line": 38,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 39,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      },
+      {
+        "line": 40,
+        "text": "        \u003c/dependency\u003e"
+      },
+      {
+        "line": 41,
+        "text": "                \u003cdependency\u003e"
+      },
+      {
+        "line": 42,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 43,
+        "text": "            \u003cartifactId\u003espring-boot-autoconfigure\u003c/artifactId\u003e"
+      },
+      {
+        "line": 44,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 45,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      }
+    ]
+  },
+  {
+    "path": "org.springframework.boot:spring-boot-autoconfigure",
+    "line": 38,
+    "content": [
+      {
+        "line": 35,
+        "text": "        \u003cdependency\u003e"
+      },
+      {
+        "line": 36,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 37,
+        "text": "            \u003cartifactId\u003espring-boot-autoconfigure\u003c/artifactId\u003e"
+      },
+      {
+        "line": 38,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 39,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      },
+      {
+        "line": 40,
+        "text": "        \u003c/dependency\u003e"
+      },
+      {
+        "line": 41,
+        "text": "                \u003cdependency\u003e"
+      },
+      {
+        "line": 42,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 43,
+        "text": "            \u003cartifactId\u003espring-boot-autoconfigure\u003c/artifactId\u003e"
+      },
+      {
+        "line": 44,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 45,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      }
+    ]
+  },
+  {
+    "path": "org.springframework.boot:spring-boot-autoconfigure",
+    "line": 44,
+    "content": [
+      {
+        "line": 41,
+        "text": "                \u003cdependency\u003e"
+      },
+      {
+        "line": 42,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 43,
+        "text": "            \u003cartifactId\u003espring-boot-autoconfigure\u003c/artifactId\u003e"
+      },
+      {
+        "line": 44,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 45,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      },
+      {
+        "line": 46,
+        "text": "        \u003c/dependency\u003e"
+      },
+      {
+        "line": 47,
+        "text": "        \u003cdependency\u003e"
+      },
+      {
+        "line": 48,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 49,
+        "text": "            \u003cartifactId\u003espring-boot-configuration-processor\u003c/artifactId\u003e"
+      },
+      {
+        "line": 50,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 51,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      }
+    ]
+  },
+  {
+    "path": "org.springframework.boot:spring-boot-autoconfigure",
+    "line": 44,
+    "content": [
+      {
+        "line": 41,
+        "text": "                \u003cdependency\u003e"
+      },
+      {
+        "line": 42,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 43,
+        "text": "            \u003cartifactId\u003espring-boot-autoconfigure\u003c/artifactId\u003e"
+      },
+      {
+        "line": 44,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 45,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      },
+      {
+        "line": 46,
+        "text": "        \u003c/dependency\u003e"
+      },
+      {
+        "line": 47,
+        "text": "        \u003cdependency\u003e"
+      },
+      {
+        "line": 48,
+        "text": "            \u003cgroupId\u003eorg.springframework.boot\u003c/groupId\u003e"
+      },
+      {
+        "line": 49,
+        "text": "            \u003cartifactId\u003espring-boot-configuration-processor\u003c/artifactId\u003e"
+      },
+      {
+        "line": 50,
+        "text": "            \u003cversion\u003e2.0.5.RELEASE\u003c/version\u003e"
+      },
+      {
+        "line": 51,
+        "text": "            \u003coptional\u003etrue\u003c/optional\u003e"
+      }
+    ]
+  }
+]
