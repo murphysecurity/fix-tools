@@ -5,15 +5,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/config"
-	githttp "gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 	"io"
 	"net/http"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
+	githttp "gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 )
 
 func (t *FixParams) GiteeFix() (prUrl string, preview []Preview, err error) {
@@ -84,7 +85,7 @@ func (t *FixParams) GiteeFix() (prUrl string, preview []Preview, err error) {
 		// 删除文件夹
 		DelDir(repoPath)
 	}()
-	_, err = GitConfig(ctx, "./", repoPath, t.branch, htmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password,t.Token)
+	_, err = GitConfig(ctx, "./", repoPath, t.branch, htmlUrl, t.CommitHash, t.ProxyUrl, t.UserName, t.Password, t.Token)
 	if err != nil {
 		err = errors.New(" 克隆文件失败  " + err.Error())
 		return
@@ -102,7 +103,7 @@ func (t *FixParams) GiteeFix() (prUrl string, preview []Preview, err error) {
 		return
 	}
 	t.Dir = repoPath
-	preview, _, _, err = t.LocalFix()
+	preview, err = t.LocalFix()
 	if err != nil {
 		err = errors.New(" 寻找修复路径失败  " + err.Error())
 		return

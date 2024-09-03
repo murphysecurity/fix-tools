@@ -2,12 +2,13 @@ package fix
 
 import (
 	"context"
-	"github.com/rs/xid"
-	"github.com/xanzy/go-gitlab"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/rs/xid"
+	"github.com/xanzy/go-gitlab"
 )
 
 func (t *FixParams) GitlabFix() (PrUrl string, preview []Preview, err error) {
@@ -54,7 +55,7 @@ func (t *FixParams) GitlabFix() (PrUrl string, preview []Preview, err error) {
 	}
 
 	t.Dir = repoPath
-	preview, _, _, err = t.LocalFix()
+	preview, err = t.LocalFix()
 	if err != nil {
 		return
 	}

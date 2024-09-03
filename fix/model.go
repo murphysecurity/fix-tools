@@ -1,6 +1,7 @@
 package fix
 
 import (
+	"encoding/xml"
 	"errors"
 	"strconv"
 	"time"
@@ -43,13 +44,98 @@ type FixParams struct {
 	delDir      string
 	pomPathList []string
 }
-
 type Comp struct {
 	CompName      string         `json:"comp_name"`       // 组件名称
 	CompVersion   string         `json:"comp_version"`    // 组件版本
 	MinFixVersion string         `json:"min_fix_version"` // 最小修复版本
 	DmModelList   []FixModel     `json:"dm_model_list"`
 	HaveDMList    map[string]int `json:"have_dm_list"`
+}
+type FixModel struct {
+	Line            int
+	OldVersion      string
+	NewVersion      string
+	GroupId         string
+	ArtifactId      string
+	CompName        string
+	PomPath         string
+	relativePomPath string
+}
+
+type PropertyModel struct {
+	Line       int
+	OldVersion string
+	TagName    string
+	PomPath    string
+	CompName   []string
+}
+type Response struct {
+	PrUrl      string         `json:"pr_url,omitempty"`
+	Preview    []Preview      `json:"preview,omitempty"`
+	DmPreview  []Preview      `json:"dm_preview,omitempty"`
+	HaveDMList map[string]int `json:"have_dm_list,omitempty"`
+	Err        error          `json:"-"`
+}
+type ModPosition struct {
+	Path    string    `json:"path"`
+	Line    int       `json:"line"`
+	Content []Content `json:"content"`
+}
+type Preview struct {
+	Path    string    `json:"path"`
+	Line    int       `json:"line"`
+	Content []Content `json:"content"`
+}
+
+type Content struct {
+	Line int    `json:"line"`
+	Text string `json:"text"`
+}
+type info struct {
+	Path    string `json:"path"`
+	Line    int    `json:"line"`
+	Version string `json:"version"`
+}
+type mavenParams struct {
+	PropertiesMP map[string]ModPosition
+	Preview      []Preview
+	DmPreview    []Preview
+	HaveDMList   map[string]int
+}
+
+// ProjectXML 定义了整个pom.xml的结构
+type projectXML struct {
+	XMLName    xml.Name `xml:"project"`
+	Version    string   `xml:"version"`
+	Properties struct {
+		XMLName xml.Name `xml:"properties"`
+		Props   []struct {
+			XMLName xml.Name `xml:""`
+			Value   string   `xml:",chardata"`
+		} `xml:",any"`
+	} `xml:"properties"`
+	DependencyManagement struct {
+		Dependencies struct {
+			Dependency []struct {
+				GroupId    string `xml:"groupId"`
+				ArtifactId string `xml:"artifactId"`
+				Version    string `xml:"version"`
+				Scope      string `xml:"scope,omitempty"` // omitempty 表示如果该字段为空，则不包含在XML中
+				Type       string `xml:"type,omitempty"`
+				Optional   string `xml:"optional,omitempty"`
+			} `xml:"dependency"`
+		} `xml:"dependencies"`
+	} `xml:"dependencyManagement"`
+	Dependencies struct {
+		Dependency []struct {
+			GroupId    string `xml:"groupId"`
+			ArtifactId string `xml:"artifactId"`
+			Version    string `xml:"version"`
+			Scope      string `xml:"scope,omitempty"` // omitempty 表示如果该字段为空，则不包含在XML中
+			Type       string `xml:"type,omitempty"`
+			Optional   string `xml:"optional,omitempty"`
+		} `xml:"dependency"`
+	} `xml:"dependencies"`
 }
 
 func (t *FixParams) check() error {
@@ -60,6 +146,7 @@ func (t *FixParams) check() error {
 	case "npm":
 	case "yarn":
 	case "python":
+	case "nuget":
 	default:
 		return errors.New("不支持的包管理器: " + t.PackageManager)
 	}
@@ -86,52 +173,4 @@ func (t *FixParams) check() error {
 	}
 	t.branch = "fix_" + strconv.FormatInt(time.Now().Unix(), 10)
 	return nil
-}
-
-type mavenParams struct {
-	propertyMap      map[string][]PropertyModel
-	fixModelList     []FixModel
-	preview          []Preview
-	dmModelList      []FixModel
-	haveDmMap        map[string]int
-	dependenciesLine map[string]int
-	dmPreview        []Preview
-}
-
-type Preview struct {
-	Path    string    `json:"path"`
-	Line    int       `json:"line"`
-	Content []Content `json:"content"`
-}
-
-type Content struct {
-	Line int    `json:"line"`
-	Text string `json:"text"`
-}
-
-type FixModel struct {
-	Line            int
-	OldVersion      string
-	NewVersion      string
-	GroupId         string
-	ArtifactId      string
-	CompName        string
-	PomPath         string
-	relativePomPath string
-}
-
-type PropertyModel struct {
-	Line       int
-	OldVersion string
-	TagName    string
-	PomPath    string
-	CompName   []string
-}
-
-type Response struct {
-	PrUrl      string         `json:"pr_url,omitempty"`
-	Preview    []Preview      `json:"preview,omitempty"`
-	DmPreview  []Preview      `json:"dm_preview,omitempty"`
-	HaveDMList map[string]int `json:"have_dm_list,omitempty"`
-	Err        error          `json:"-"`
 }

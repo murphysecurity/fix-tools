@@ -6,17 +6,18 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/go-git/go-git/v5"
-	githttp "github.com/go-git/go-git/v5/plumbing/transport/http"
-	"github.com/google/go-github/v47/github"
-	"github.com/rs/xid"
-	"golang.org/x/oauth2"
 	"io"
 	"net/http"
 	"net/url"
 	"path/filepath"
 	"strconv"
 	"time"
+
+	"github.com/go-git/go-git/v5"
+	githttp "github.com/go-git/go-git/v5/plumbing/transport/http"
+	"github.com/google/go-github/v47/github"
+	"github.com/rs/xid"
+	"golang.org/x/oauth2"
 )
 
 func (t *FixParams) GithubFix() (prUrl string, preview []Preview, err error) {
@@ -75,7 +76,7 @@ func (t *FixParams) GithubFix() (prUrl string, preview []Preview, err error) {
 	}
 
 	t.Dir = repoPath
-	preview, _, _, err = t.LocalFix()
+	preview, err = t.LocalFix()
 	if err != nil {
 		return
 	}
