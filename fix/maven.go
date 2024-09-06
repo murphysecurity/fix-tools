@@ -43,7 +43,7 @@ func (c mavenParams) CheckMavenLine(dir string, compList []Comp) (previews []Pre
 			repeat[comp.CompName+comp.CompVersion] = true
 			for _, j := range ModPositions {
 				var preview Preview
-				preview.Path = comp.CompName
+				preview.Path = strings.ReplaceAll(j.Path, dir, "")
 				preview.Line = j.Line
 				preview.Content = j.Content
 				previews = append(previews, preview)

@@ -63,7 +63,7 @@ func Test_Maven(t *testing.T) {
 	json.Unmarshal(by, &s)
 	params := fix.FixParams{
 		CompList: s,
-		Dir:      "C:\\Users\\陈浩轩\\Desktop\\mofei\\PackageDependency\\测试源码包\\java\\java-1\\TLog-1.0.2",
+		Dir:      "C:\\Users\\陈浩轩\\Desktop\\mall",
 	}
 	p, _ := params.MavenFix()
 	b, _ := json.Marshal(&p)

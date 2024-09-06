@@ -28,7 +28,7 @@ func checkRequirementsLine(dir string, compList []Comp) (previews []Preview, err
 			repeat[comp.CompName+comp.CompVersion] = true
 			for _, j := range ModPositions {
 				var preview Preview
-				preview.Path = comp.CompName
+				preview.Path = strings.ReplaceAll(j.Path, dir, "")
 				preview.Line = j.Line
 				preview.Content = j.Content
 				previews = append(previews, preview)

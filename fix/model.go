@@ -101,6 +101,7 @@ type mavenParams struct {
 	Preview      []Preview
 	DmPreview    []Preview
 	HaveDMList   map[string]int
+	Dir          string
 }
 
 // ProjectXML 定义了整个pom.xml的结构
