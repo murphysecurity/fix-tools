@@ -207,10 +207,10 @@ func (c mavenParams) getLine(filePath string) (map[string]any, *projectXML) {
 		//如果正在扫描一个模块
 		if dependency {
 
-			if strings.Contains(text, "<groupId>") {
+			if strings.Contains(text, "<groupId>") && !strings.Contains(text, "<!--") {
 				infoString[0] = text
 			}
-			if strings.Contains(text, "<artifactId>") {
+			if strings.Contains(text, "<artifactId>") && !strings.Contains(text, "<!--") {
 				infoString[1] = text
 			}
 			if strings.Contains(text, "<version>") && !strings.Contains(text, "<!--") {
