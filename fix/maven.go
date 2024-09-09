@@ -213,7 +213,7 @@ func (c mavenParams) getLine(filePath string) (map[string]any, *projectXML) {
 			if strings.Contains(text, "<artifactId>") {
 				infoString[1] = text
 			}
-			if strings.Contains(text, "<version>") {
+			if strings.Contains(text, "<version>") && !strings.Contains(text, "<!--") {
 				startLine = i + 1
 				infoString[2] = text
 			}
