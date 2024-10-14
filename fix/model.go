@@ -99,9 +99,11 @@ type mavenParams struct {
 }
 
 type Preview struct {
-	Path    string    `json:"path"`
-	Line    int       `json:"line"`
-	Content []Content `json:"content"`
+	CompName    string    `json:"comp_name"`    // 组件名称
+	CompVersion string    `json:"comp_version"` // 组件版本
+	Path        string    `json:"path"`
+	Line        int       `json:"line"`
+	Content     []Content `json:"content"`
 }
 
 type Content struct {

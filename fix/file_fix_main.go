@@ -13,6 +13,9 @@ func (t *FixParams) LocalFix() (preview []Preview, dmPreview []Preview, haveDMLi
 		preview, err = t.YarnFix()
 	case "python":
 		preview, err = t.PythonFix()
+	case "maven_cli":
+		preview, dmPreview, haveDMList, err = t.MavenFixNew()
+
 	}
 	return
 }

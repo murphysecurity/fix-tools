@@ -301,9 +301,11 @@ func fileUpdate(model FixModel, comp Comp, p *mavenParams, params FixParams) (er
 		return
 	}
 	p.preview = append(p.preview, Preview{
-		Path:    model.relativePomPath,
-		Line:    model.Line,
-		Content: contentList,
+		CompName:    comp.CompName,
+		CompVersion: comp.CompVersion,
+		Path:        model.relativePomPath,
+		Line:        model.Line,
+		Content:     contentList,
 	})
 
 	if !params.ShowOnly {
